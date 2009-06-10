@@ -16,5 +16,8 @@ setup(
     namespace_packages = ['zeit'],
     install_requires=[
         'setuptools',
+        'zeit.content.cp',
+        'zeit.content.article',
+        'zeit.cms'
         ],
 )
