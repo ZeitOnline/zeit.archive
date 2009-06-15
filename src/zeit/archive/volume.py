@@ -9,8 +9,7 @@ class ArchiveVolume(object):
 
     def __init__(self, context):
         self.context = context
-        cp = zeit.content.cp.centerpage.CenterPage()
-        self.lead = cp['lead']
+        self.cp = zeit.content.cp.centerpage.CenterPage()
 
     #TODO def rebuild(self):
 
@@ -18,14 +17,16 @@ class ArchiveVolume(object):
         ressort = getattr(self.context, 'ressort', None)
         if ressort is None:
             return
+        lead = self.cp['lead']
         factory = zope.component.getAdapter(
-            self.lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
-        if ressort not in self.lead:
+            lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
+        if ressort not in lead:
             block = factory()
             block.__name__ = ressort
             block.title = ressort
         else:
-            block = self.lead[ressort]
+            block = lead[ressort]
         block.insert(0, zeit.cms.interfaces.ICMSContent(self.context))
+        self.context.__parent__['index'] = self.cp
  
     #TODO def removeTeaser(self):
