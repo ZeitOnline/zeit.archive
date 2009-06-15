@@ -5,6 +5,8 @@ Prepare for functional tests.
 >>> zope.app.component.hooks.setSite(getRootFolder())
 
 
+#TODO Check if an archive volume already exists.
+
 Create a sample archive volume.
 >>> import zeit.cms.interfaces
 >>> article = zeit.cms.interfaces.ICMSContent(
@@ -13,7 +15,7 @@ Create a sample archive volume.
 >>> import zeit.archive.volume
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article)
 
->>> volume.addTeaser(article)
+>>> volume.addTeaser()
 
 >>> import lxml.etree
 >>> print lxml.etree.tostring(volume.lead.xml, pretty_print=True)

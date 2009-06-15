@@ -14,8 +14,8 @@ class ArchiveVolume(object):
 
     #TODO def rebuild(self):
 
-    def addTeaser(self, article, position=0):
-        ressort = getattr(article, 'ressort', None)
+    def addTeaser(self, position=0):
+        ressort = getattr(self.context, 'ressort', None)
         if ressort is None:
             return
         factory = zope.component.getAdapter(
@@ -26,6 +26,6 @@ class ArchiveVolume(object):
             block.title = ressort
         else:
             block = self.lead[ressort]
-        block.insert(0, zeit.cms.interfaces.ICMSContent(article))
+        block.insert(0, zeit.cms.interfaces.ICMSContent(self.context))
  
     #TODO def removeTeaser(self):
