@@ -16,8 +16,9 @@ class ArchiveVolume(object):
 
     def addTeaser(self, position=0):
         if 'index' in self.context.__parent__:
-            self.cp = self.context.__parent__['index']
-            with zeit.cms.checkout.helper.checked_out(self.cp) as co:
+            index = self.context.__parent__['index']
+            with zeit.cms.checkout.helper.checked_out(index) as co:
+                self.cp = co
                 self._createTeaser()
         else:
             self.cp = zeit.content.cp.centerpage.CenterPage()
