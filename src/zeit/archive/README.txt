@@ -8,17 +8,18 @@ Prepare for functional tests.
 Archive volume should not exist yet.
 
 >>> import zeit.cms.interfaces
->>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/online/2007/01/index')
->>> index
-<zeit.cms.repository.unknown.PersistentUnknownResource object at 0xb03feec>
+>>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/01/index')
+Traceback (most recent call last):
+...
+TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/01/index', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
 
 
 Create a new archive volume containing a single teaser.
 
 >>> import zeit.archive.volume
+>>> principal = zeit.cms.testing.create_interaction()
 >>> article = zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/online/2007/01/Somalia')
+...     'http://xml.zeit.de/2007/01/Miami')
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article)
 >>> volume.addTeaser()
 
@@ -26,7 +27,7 @@ Create a new archive volume containing a single teaser.
 Archive volume should exist now.
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/online/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index')
 >>> index
 <zeit.content.cp.centerpage.CenterPage object at 0x...>
 
@@ -36,14 +37,51 @@ Check content.
 >>> import lxml.etree
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="International" title="International">
-    <block href="http://xml.zeit.de/online/2007/01/Somalia" year="2007" issue="1">
-      <supertitle py:pytype="str">Somalia</supertitle>
+  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
   </container>
 </region>
 <BLANKLINE>
+
+
+Add a teaser to an existing volume in the same ressort.
+
+>>> article2 = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/Momente-Uhl')
+>>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
+>>> volume.addTeaser()
+
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" year="2006" issue="1">
+...
+    </block>
+    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
+
+
+Add a teaser to an existing volume in a different ressort.
+
+
+>>> article3 = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/Martenstein')
+>>> volume = zeit.archive.interfaces.IArchiveVolume(article3)
+>>> volume.addTeaser()
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 
 
 Cleanup.
