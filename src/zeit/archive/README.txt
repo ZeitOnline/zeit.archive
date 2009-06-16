@@ -54,6 +54,8 @@ Add a teaser to an existing volume in the same ressort.
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
 >>> volume.addTeaser()
 
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
@@ -69,10 +71,7 @@ Add a teaser to an existing volume in the same ressort.
 <BLANKLINE>
 
 
-
-
 Add a teaser to an existing volume in a different ressort.
-
 
 >>> article3 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Martenstein')
@@ -82,6 +81,21 @@ Add a teaser to an existing volume in a different ressort.
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" year="2006" issue="1">
+...
+    </block>
+    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+  <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
+...
+  </container>
+</region>
+<BLANKLINE>
 
 
 Cleanup.
