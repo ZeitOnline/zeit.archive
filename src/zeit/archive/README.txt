@@ -98,5 +98,27 @@ Add a teaser to an existing volume in a different ressort.
 <BLANKLINE>
 
 
+Remove a teaser from the volume.
+
+>>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
+>>> volume.removeTeaser()
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+  <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
+...
+  </container>
+</region>
+<BLANKLINE>
+
+
 Cleanup.
 >>> zope.app.component.hooks.setSite(old_site)

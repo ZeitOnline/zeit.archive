@@ -25,7 +25,12 @@ class ArchiveVolume(object):
             self._createTeaser()
             self.context.__parent__['index'] = self.cp
 
-    #TODO def removeTeaser(self):
+    def removeTeaser(self):
+        index = self.context.__parent__['index']
+        with zeit.cms.checkout.helper.checked_out(index) as co:
+            ressort = getattr(self.context, 'ressort', None)
+            block = co['lead'][ressort]
+            block.remove(zeit.cms.interfaces.ICMSContent(self.context))
 
     def _createTeaser(self):
         ressort = getattr(self.context, 'ressort', None)
