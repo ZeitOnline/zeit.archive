@@ -38,7 +38,7 @@ Check content.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
@@ -59,10 +59,10 @@ Add a teaser to an existing volume in the same ressort.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" year="2006" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
 ...
     </block>
-    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
@@ -83,15 +83,16 @@ Add a teaser to an existing volume in a different ressort.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" year="2006" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
 ...
     </block>
-    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
   </container>
   <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
+    <block href="http://xml.zeit.de/2007/01/Martenstein" publication-date="" expires="" year="2007" issue="1">
 ...
   </container>
 </region>
@@ -108,13 +109,40 @@ Remove a teaser from the volume.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
   </container>
   <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
 ...
+  </container>
+</region>
+<BLANKLINE>
+
+
+Rebuild a whole volume from scratch.
+We need to assign the published attribute to articles we want to appear in
+the resultset since our testarticles do not have set this attribute by default.
+
+>>> article4 = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/Macher')
+>>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
+
+>>> volume = zeit.archive.interfaces.IArchiveVolume(
+...     zeit.cms.interfaces.ICMSContent(
+...         'http://xml.zeit.de/2007/01/'))
+>>> volume.rebuildVolume()
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
+    <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
+      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
+...
+    </block>
   </container>
 </region>
 <BLANKLINE>
