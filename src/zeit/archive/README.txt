@@ -129,10 +129,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     'http://xml.zeit.de/2007/01/Macher')
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
 
->>> volume = zeit.archive.interfaces.IArchiveVolume(
-...     zeit.cms.interfaces.ICMSContent(
-...         'http://xml.zeit.de/2007/01/'))
->>> volume.rebuildVolume()
+>>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/01/')
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index')

@@ -1,8 +1,25 @@
 from __future__ import with_statement
 import zeit.archive.interfaces
 import zeit.cms.checkout.interfaces
-import zope.interface
 import zeit.workflow
+import zope.interface
+
+
+
+def rebuildVolume(id):
+    start_container = zeit.cms.interfaces.ICMSContent(id)
+    del start_container['index']
+    stack = [start_container]
+    while stack:
+        content = stack.pop(0)
+        publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
+        if zeit.cms.repository.interfaces.ICollection.providedBy(content):
+            stack.extend(content.values())
+        elif publish.published:
+            volume = zeit.archive.interfaces.IArchiveVolume(content, None)
+            volume.teaser = content
+            volume.cp = zeit.content.cp.centerpage.CenterPage()
+            volume.addTeaser()
 
 
 class ArchiveVolume(object):
@@ -15,21 +32,6 @@ class ArchiveVolume(object):
         if not zeit.cms.repository.interfaces.ICollection.providedBy(context):
             self.teaser = context
             self.parent = self.teaser.__parent__
-
-    def rebuildVolume(self):
-        start_container = zeit.cms.interfaces.ICMSContent(self.context)
-        self.parent = start_container
-        self._clearVolume()
-        stack = [start_container]
-        while stack:
-            content = stack.pop(0)
-            publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
-            if zeit.cms.repository.interfaces.ICollection.providedBy(content):
-                stack.extend(content.values())
-            elif publish.published == True:
-                self.teaser = content
-                self.cp = zeit.content.cp.centerpage.CenterPage()
-                self.addTeaser()
 
     def addTeaser(self, position=0):
         if 'index' in self.parent:
