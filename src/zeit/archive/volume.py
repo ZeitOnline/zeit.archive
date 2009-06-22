@@ -24,7 +24,7 @@ def rebuildVolume(id):
 
 class ArchiveVolume(object):
 
-    zope.component.adapts(zeit.cms.interfaces.ICMSContent)
+    zope.component.adapts(zeit.content.article.interfaces.IArticle)
     zope.interface.implements(zeit.archive.interfaces.IArchiveVolume)
 
     def __init__(self, context):

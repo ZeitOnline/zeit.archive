@@ -121,6 +121,17 @@ Remove a teaser from the volume.
 <BLANKLINE>
 
 
+Adapting only works with articles.
+#FIXME Additional content types may follow.
+
+>>> folder = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/')
+>>> volume = zeit.archive.interfaces.IArchiveVolume(folder)
+Traceback (most recent call last):
+...
+TypeError: ('Could not adapt', ...)
+
+
 Rebuild a whole volume from scratch.
 We need to assign the published attribute to articles we want to appear in
 the resultset since our testarticles do not have set this attribute by default.
