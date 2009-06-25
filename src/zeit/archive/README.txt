@@ -156,5 +156,42 @@ the resultset since our testarticles do not have set this attribute by default.
 <BLANKLINE>
 
 
+Publish an article to test our event handler.
+
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article)
+>>> workflow.published
+False
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> publish.publish()
+>>> import lovely.remotetask.interfaces
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
+    <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
+      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
+...
+    </block>
+  </container>
+  <container cp:type="teaser" module="buttons" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
 Cleanup.
 >>> zope.app.component.hooks.setSite(old_site)

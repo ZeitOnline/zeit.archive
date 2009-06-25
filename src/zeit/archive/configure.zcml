@@ -3,5 +3,8 @@
    >
 
   <adapter factory=".volume.ArchiveVolume" />
+
+  <subscriber handler=".volume.update_volume" />
+
 </configure>
 

@@ -3,6 +3,7 @@ import zeit.archive.interfaces
 import zeit.cms.checkout.interfaces
 import zeit.workflow
 import zope.interface
+import zope.component
 
 
 
@@ -20,6 +21,14 @@ def rebuildVolume(id):
             volume.teaser = content
             volume.cp = zeit.content.cp.centerpage.CenterPage()
             volume.addTeaser()
+
+
+@zope.component.adapter(
+    zeit.content.article.interfaces.IArticle,
+    zeit.cms.workflow.interfaces.IBeforePublishEvent)
+def update_volume(context, event):
+    volume = zeit.archive.interfaces.IArchiveVolume(context)
+    volume.addTeaser()
 
 
 class ArchiveVolume(object):
