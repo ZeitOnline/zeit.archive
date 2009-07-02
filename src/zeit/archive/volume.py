@@ -1,6 +1,7 @@
 from __future__ import with_statement
 import zeit.archive.interfaces
 import zeit.cms.checkout.interfaces
+import zeit.cms.repository.interfaces
 import zeit.workflow
 import zope.interface
 import zope.component
@@ -26,9 +27,17 @@ def rebuildVolume(id):
 @zope.component.adapter(
     zeit.content.article.interfaces.IArticle,
     zeit.cms.workflow.interfaces.IBeforePublishEvent)
-def update_volume(context, event):
+def addContext(context, event):
     volume = zeit.archive.interfaces.IArchiveVolume(context)
     volume.addTeaser()
+
+
+@zope.component.adapter(
+    zeit.content.article.interfaces.IArticle,
+    zeit.cms.repository.interfaces.IBeforeObjectRemovedEvent)
+def removeContext(context, event):
+    volume = zeit.archive.interfaces.IArchiveVolume(context)
+    volume.removeTeaser()
 
 
 class ArchiveVolume(object):

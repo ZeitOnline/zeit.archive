@@ -4,7 +4,8 @@
 
   <adapter factory=".volume.ArchiveVolume" />
 
-  <subscriber handler=".volume.update_volume" />
+  <subscriber handler=".volume.addContext" />
+  <subscriber handler=".volume.removeContext" />
 
 </configure>
 

@@ -193,5 +193,23 @@ True
 <BLANKLINE>
 
 
+Delete an article to test our event handler.
+
+>>> repository = zope.component.getUtility(zeit.cms.repository.interfaces.IRepository)
+>>> del repository['2007']['01']['Macher']
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="buttons" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
 Cleanup.
 >>> zope.app.component.hooks.setSite(old_site)
