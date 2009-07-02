@@ -139,8 +139,10 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> article4 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Macher')
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
-
->>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/01/')
+>>> article5 = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/02/Vita')
+>>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
+>>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/')
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index')
@@ -149,6 +151,18 @@ the resultset since our testarticles do not have set this attribute by default.
   <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/02/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Feuilleton" title="Feuilleton">
+    <block href="http://xml.zeit.de/2007/02/Vita" publication-date="" expires="" year="2007" issue="2">
 ...
     </block>
   </container>

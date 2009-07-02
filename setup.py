@@ -20,4 +20,8 @@ setup(
         'zeit.content.article',
         'zeit.cms'
         ],
+    entry_points = """
+        [console_scripts]
+        volume-builder = zeit.archive.worker:build_main
+        """
 )

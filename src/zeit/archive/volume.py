@@ -10,12 +10,13 @@ import zope.component
 
 def rebuildVolume(id):
     start_container = zeit.cms.interfaces.ICMSContent(id)
-    del start_container['index']
     stack = [start_container]
     while stack:
         content = stack.pop(0)
         publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
+            if 'index' in content:
+                del content['index']
             stack.extend(content.values())
         elif publish.published:
             volume = zeit.archive.interfaces.IArchiveVolume(content, None)
