@@ -2,9 +2,10 @@ from __future__ import with_statement
 import zeit.archive.interfaces
 import zeit.cms.checkout.interfaces
 import zeit.cms.repository.interfaces
+import zeit.content.article.interfaces
 import zeit.workflow
-import zope.interface
 import zope.component
+import zope.interface
 
 
 
@@ -20,9 +21,10 @@ def rebuildVolume(id):
             stack.extend(content.values())
         elif publish.published:
             volume = zeit.archive.interfaces.IArchiveVolume(content, None)
-            volume.teaser = content
-            volume.cp = zeit.content.cp.centerpage.CenterPage()
-            volume.addTeaser()
+            if volume is not None:
+                volume.teaser = content
+                volume.cp = zeit.content.cp.centerpage.CenterPage()
+                volume.addTeaser()
 
 
 @zope.component.adapter(
