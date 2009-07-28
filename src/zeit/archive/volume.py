@@ -16,8 +16,8 @@ def rebuildVolume(id):
         content = stack.pop(0)
         publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
-            if 'index' in content:
-                del content['index']
+            if 'index_new' in content:
+                del content['index_new']
             stack.extend(content.values())
         elif publish.published:
             volume = zeit.archive.interfaces.IArchiveVolume(content, None)
@@ -55,18 +55,18 @@ class ArchiveVolume(object):
             self.parent = self.teaser.__parent__
 
     def addTeaser(self, position=0):
-        if 'index' in self.parent:
-            index = self.parent['index']
+        if 'index_new' in self.parent:
+            index = self.parent['index_new']
             with zeit.cms.checkout.helper.checked_out(index) as co:
                 self.cp = co
                 self._createTeaser()
         else:
             self.cp = zeit.content.cp.centerpage.CenterPage()
             self._createTeaser()
-            self.parent['index'] = self.cp
+            self.parent['index_new'] = self.cp
 
     def removeTeaser(self):
-        index = self.parent['index']
+        index = self.parent['index_new']
         with zeit.cms.checkout.helper.checked_out(index) as co:
             ressort = getattr(self.teaser, 'ressort', None)
             block = co['lead'][ressort]
@@ -88,4 +88,4 @@ class ArchiveVolume(object):
         block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
 
     def _clearVolume(self):
-        del self.parent['index']
+        del self.parent['index_new']
