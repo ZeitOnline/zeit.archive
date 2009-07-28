@@ -69,8 +69,11 @@ class ArchiveVolume(object):
         index = self.parent['index_new_archive']
         with zeit.cms.checkout.helper.checked_out(index) as co:
             ressort = getattr(self.teaser, 'ressort', None)
-            block = co['lead'][ressort]
+            lead = co['lead']
+            block = lead[ressort]
             block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
+            if len(block) == 0:
+                del lead[block.__name__]
 
     def _createTeaser(self):
         ressort = getattr(self.teaser, 'ressort', None)
