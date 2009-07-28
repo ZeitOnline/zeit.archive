@@ -8,10 +8,10 @@ Prepare for functional tests.
 Archive volume should not exist yet.
 
 >>> import zeit.cms.interfaces
->>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/01/index')
+>>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/01/index_new_archive')
 Traceback (most recent call last):
 ...
-TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/01/index', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
+TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/01/index_new_archive', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
 
 
 Create a new archive volume containing a single teaser.
@@ -27,7 +27,7 @@ Create a new archive volume containing a single teaser.
 Archive volume should exist now.
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> index
 <zeit.content.cp.centerpage.CenterPage object at 0x...>
 
@@ -55,7 +55,7 @@ Add a teaser to an existing volume in the same ressort.
 >>> volume.addTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
@@ -79,7 +79,7 @@ Add a teaser to an existing volume in a different ressort.
 >>> volume.addTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
@@ -105,7 +105,7 @@ Remove a teaser from the volume.
 >>> volume.removeTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
@@ -145,7 +145,7 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/')
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
@@ -158,7 +158,7 @@ the resultset since our testarticles do not have set this attribute by default.
 <BLANKLINE>
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/02/index')
+...     'http://xml.zeit.de/2007/02/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Feuilleton" title="Feuilleton">
@@ -188,7 +188,7 @@ True
 True
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
@@ -212,7 +212,7 @@ Delete an article to test our event handler.
 >>> repository = zope.component.getUtility(zeit.cms.repository.interfaces.IRepository)
 >>> del repository['2007']['01']['Macher']
 >>> index =  zeit.cms.interfaces.ICMSContent(
-...     'http://xml.zeit.de/2007/01/index')
+...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="buttons" cp:__name__="Reisen" title="Reisen">
