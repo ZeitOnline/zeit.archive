@@ -20,6 +20,9 @@ Create a new archive volume containing a single teaser.
 >>> principal = zeit.cms.testing.create_interaction()
 >>> article = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Miami')
+>>> with zeit.cms.checkout.helper.checked_out(article) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Reisen'
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article)
 >>> volume.addTeaser()
 
@@ -51,6 +54,9 @@ Add a teaser to an existing volume in the same ressort.
 
 >>> article2 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Momente-Uhl')
+>>> with zeit.cms.checkout.helper.checked_out(article2) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Reisen'
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
 >>> volume.addTeaser()
 
@@ -75,6 +81,9 @@ Add a teaser to an existing volume in a different ressort.
 
 >>> article3 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Martenstein')
+>>> with zeit.cms.checkout.helper.checked_out(article3) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Leben'
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article3)
 >>> volume.addTeaser()
 
@@ -138,9 +147,15 @@ the resultset since our testarticles do not have set this attribute by default.
 
 >>> article4 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Macher')
+>>> with zeit.cms.checkout.helper.checked_out(article4) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Wirtschaft'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
 >>> article5 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/02/Vita')
+>>> with zeit.cms.checkout.helper.checked_out(article5) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Feuilleton'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
 >>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/')
 
