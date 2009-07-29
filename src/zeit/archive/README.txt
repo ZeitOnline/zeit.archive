@@ -77,10 +77,31 @@ Add a teaser to an existing volume in the same ressort.
 <BLANKLINE>
 
 
-Add a teaser to an existing volume in a different ressort.
+A teaser without a print ressort specified will not be added.
 
 >>> article3 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Martenstein')
+>>> volume = zeit.archive.interfaces.IArchiveVolume(article3)
+>>> volume.addTeaser()
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
+...
+    </block>
+    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
+Add a teaser to an existing volume in a different ressort.
+
 >>> with zeit.cms.checkout.helper.checked_out(article3) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Leben'

@@ -66,9 +66,14 @@ class ArchiveVolume(object):
             self.parent['index_new_archive'] = self.cp
 
     def removeTeaser(self):
+        meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
+        if meta is None:
+            return
+        ressort = meta.printRessort
+        if ressort is None:
+            return
         index = self.parent['index_new_archive']
         with zeit.cms.checkout.helper.checked_out(index) as co:
-            ressort = getattr(self.teaser, 'printRessort', None)
             lead = co['lead']
             block = lead[ressort]
             block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
@@ -76,7 +81,10 @@ class ArchiveVolume(object):
                 del lead[block.__name__]
 
     def _createTeaser(self):
-        ressort = getattr(self.teaser, 'printRessort', None)
+        meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
+        if meta is None:
+            return
+        ressort = meta.printRessort
         if ressort is None:
             return
         lead = self.cp['lead']
