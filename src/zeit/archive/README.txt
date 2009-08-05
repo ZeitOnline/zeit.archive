@@ -40,7 +40,7 @@ Check content.
 >>> import lxml.etree
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
@@ -64,7 +64,7 @@ Add a teaser to an existing volume in the same ressort.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
 ...
     </block>
@@ -87,7 +87,7 @@ A teaser without a print ressort specified will not be added.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
 ...
     </block>
@@ -112,7 +112,7 @@ Add a teaser to an existing volume in a different ressort.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
 ...
     </block>
@@ -121,7 +121,7 @@ Add a teaser to an existing volume in a different ressort.
 ...
     </block>
   </container>
-  <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
     <block href="http://xml.zeit.de/2007/01/Martenstein" publication-date="" expires="" year="2007" issue="1">
 ...
   </container>
@@ -138,13 +138,13 @@ Remove a teaser from the volume.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
   </container>
-  <container cp:type="teaser" module="buttons" cp:__name__="Leben" title="Leben">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
 ...
   </container>
 </region>
@@ -184,7 +184,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
 ...
@@ -197,7 +197,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     'http://xml.zeit.de/2007/02/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Feuilleton" title="Feuilleton">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Feuilleton" title="Feuilleton">
     <block href="http://xml.zeit.de/2007/02/Vita" publication-date="" expires="" year="2007" issue="2">
 ...
     </block>
@@ -227,13 +227,13 @@ True
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="leader" cp:__name__="Wirtschaft" title="Wirtschaft">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
 ...
     </block>
   </container>
-  <container cp:type="teaser" module="buttons" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...
@@ -251,7 +251,7 @@ Delete an article to test our event handler.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="buttons" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
       <supertitle py:pytype="str">Florida</supertitle>
 ...

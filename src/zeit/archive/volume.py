@@ -92,6 +92,8 @@ class ArchiveVolume(object):
             factory = zope.component.getAdapter(
                 lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
             block = factory()
+            layout = zeit.content.cp.layout.get_layout('archive-print')
+            block.layout = layout
             block.__name__ = ressort
             block.title = ressort
         else:
