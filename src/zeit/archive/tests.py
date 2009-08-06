@@ -1,6 +1,7 @@
 import unittest
 import pkg_resources
 import zeit.cms.testing
+import zeit.content.cp.testing
 from zope.testing import doctest
 import zope.app.testing.functional
 
@@ -13,6 +14,7 @@ def test_suite():
     suite.addTest(zeit.cms.testing.FunctionalDocFileSuite(
         'README.txt',
         layer=ArchiveLayer,
+        product_config=zeit.content.cp.testing.product_config,
         optionflags=doctest.ELLIPSIS
         ))
 
