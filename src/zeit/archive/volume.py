@@ -63,6 +63,8 @@ class ArchiveVolume(object):
         else:
             self.cp = zeit.content.cp.centerpage.CenterPage()
             self.cp.type = 'archive-print'
+            self.cp.volume = self.parent.__name__
+            self.cp.year = self.parent.__parent__.__name__
             self._createTeaser()
             self.parent['index_new_archive'] = self.cp
 
