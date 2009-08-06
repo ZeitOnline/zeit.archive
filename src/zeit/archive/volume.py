@@ -62,6 +62,7 @@ class ArchiveVolume(object):
                 self._createTeaser()
         else:
             self.cp = zeit.content.cp.centerpage.CenterPage()
+            self.cp.type = 'archive-print'
             self._createTeaser()
             self.parent['index_new_archive'] = self.cp
 
@@ -81,8 +82,6 @@ class ArchiveVolume(object):
                 del lead[block.__name__]
 
     def _createTeaser(self):
-        if self.cp.type != 'archive-print':
-            self.cp.type = 'archive-print'
         meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
         if meta is None:
             return
