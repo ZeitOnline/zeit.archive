@@ -81,6 +81,8 @@ class ArchiveVolume(object):
                 del lead[block.__name__]
 
     def _createTeaser(self):
+        if self.cp.type != 'archive-print':
+            self.cp.type = 'archive-print'
         meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
         if meta is None:
             return
