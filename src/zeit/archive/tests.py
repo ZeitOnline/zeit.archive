@@ -15,7 +15,6 @@ def test_suite():
         'README.txt',
         layer=ArchiveLayer,
         product_config=zeit.content.cp.testing.product_config,
-        optionflags=doctest.ELLIPSIS
         ))
 
     return suite
