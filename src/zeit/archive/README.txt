@@ -41,7 +41,7 @@ Check content.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
@@ -65,10 +65,10 @@ Add a teaser to an existing volume in the same ressort.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
@@ -88,10 +88,10 @@ A teaser without a print ressort specified will not be added.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
     </block>
@@ -113,20 +113,11 @@ Add a teaser to an existing volume in a different ressort.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" publication-date="" expires="" year="2006" issue="1">
-...
-    </block>
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Florida</supertitle>
-...
-    </block>
-  </container>
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl"...
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+      <supertitle py:pytype="str">Florida</supertitle>...
   <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
-    <block href="http://xml.zeit.de/2007/01/Martenstein" publication-date="" expires="" year="2007" issue="1">
-...
-  </container>
-</region>
-<BLANKLINE>
+    <block href="http://xml.zeit.de/2007/01/Martenstein"...
 
 
 Remove a teaser from the volume.
@@ -139,16 +130,10 @@ Remove a teaser from the volume.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Florida</supertitle>
-...
-    </block>
-  </container>
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+      <supertitle py:pytype="str">Florida</supertitle>...
   <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
 ...
-  </container>
-</region>
-<BLANKLINE>
 
 
 Adapting only works with articles.
@@ -185,25 +170,15 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
-    <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
-...
-    </block>
-  </container>
-</region>
-<BLANKLINE>
+    <block href="http://xml.zeit.de/2007/01/Macher"...
+      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/02/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Feuilleton" title="Feuilleton">
-    <block href="http://xml.zeit.de/2007/02/Vita" publication-date="" expires="" year="2007" issue="2">
-...
-    </block>
-  </container>
-</region>
-<BLANKLINE>
+    <block href="http://xml.zeit.de/2007/02/Vita"...
 
 
 Publish an article to test our event handler.
@@ -228,20 +203,11 @@ True
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
-    <block href="http://xml.zeit.de/2007/01/Macher" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>
-...
-    </block>
-  </container>
+    <block href="http://xml.zeit.de/2007/01/Macher"...
+      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Florida</supertitle>
-...
-    </block>
-  </container>
-</region>
-<BLANKLINE>
-
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+      <supertitle py:pytype="str">Florida</supertitle>...
 
 Delete an article to test our event handler.
 
@@ -252,13 +218,8 @@ Delete an article to test our event handler.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
-    <block href="http://xml.zeit.de/2007/01/Miami" publication-date="" expires="" year="2007" issue="1">
-      <supertitle py:pytype="str">Florida</supertitle>
-...
-    </block>
-  </container>
-</region>
-<BLANKLINE>
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+      <supertitle py:pytype="str">Florida</supertitle>...
 
 
 Check attribute values.
