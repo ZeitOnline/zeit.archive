@@ -52,21 +52,21 @@ class ArchiveVolume(object):
         self.context = context
         if not zeit.cms.repository.interfaces.ICollection.providedBy(context):
             self.teaser = context
-            self.parent = self.teaser.__parent__
+            self.volume_coll = self.teaser.__parent__
 
     def addTeaser(self, position=0):
-        if 'index_new_archive' in self.parent:
-            index = self.parent['index_new_archive']
-            with zeit.cms.checkout.helper.checked_out(index) as co:
-                self.cp = co
+        if 'index_new_archive' in self.volume_coll:
+            volume_index = self.volume_coll['index_new_archive']
+            with zeit.cms.checkout.helper.checked_out(volume_index) as co:
+                self.volume = co
                 self._createTeaser()
         else:
-            self.cp = zeit.content.cp.centerpage.CenterPage()
-            self.cp.type = 'archive-print'
-            self.cp.volume = self.parent.__name__
-            self.cp.year = self.parent.__parent__.__name__
+            self.volume = zeit.content.cp.centerpage.CenterPage()
+            self.volume.type = 'archive-print'
+            self.volume.volume = self.volume_coll.__name__
+            self.volume.year = self.volume_coll.__parent__.__name__
             self._createTeaser()
-            self.parent['index_new_archive'] = self.cp
+            self.volume_coll['index_new_archive'] = self.volume
 
     def removeTeaser(self):
         meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
@@ -75,8 +75,8 @@ class ArchiveVolume(object):
         ressort = meta.printRessort
         if ressort is None:
             return
-        index = self.parent['index_new_archive']
-        with zeit.cms.checkout.helper.checked_out(index) as co:
+        volume_index = self.volume_coll['index_new_archive']
+        with zeit.cms.checkout.helper.checked_out(volume_index) as co:
             lead = co['lead']
             block = lead[ressort]
             block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
@@ -90,7 +90,7 @@ class ArchiveVolume(object):
         ressort = meta.printRessort
         if ressort is None:
             return
-        lead = self.cp['lead']
+        lead = self.volume['lead']
         if ressort not in lead:
             factory = zope.component.getAdapter(
                 lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
@@ -104,4 +104,4 @@ class ArchiveVolume(object):
         block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
 
     def _clearVolume(self):
-        del self.parent['index_new_archive']
+        del self.volume_coll['index_new_archive']
