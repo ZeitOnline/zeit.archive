@@ -190,7 +190,7 @@ False
 >>> workflow.urgent = True
 >>> workflow.can_publish()
 True
->>> publish.publish()
+>>> tid = publish.publish()
 >>> import lovely.remotetask.interfaces
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
