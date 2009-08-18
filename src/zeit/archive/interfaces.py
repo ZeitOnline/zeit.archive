@@ -1,7 +1,7 @@
 import zope.interface
 
 
-class IArchiveVolume(zope.interface.Interface):
+class IArchiveIndex(zope.interface.Interface):
     """Represents a centerpage containing article teaser 
     of a previous volume."""
 

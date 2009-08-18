@@ -17,39 +17,38 @@ def rebuildVolume(id):
         publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
         status = zeit.workflow.interfaces.IOldCMSStatus(content).status
         valid_status = ['OK', 'imported', 'importedVHB']
-        print content.__name__
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
             if 'index_new_archive' in content:
                 del content['index_new_archive']
             stack.extend(content.values())
         elif publish.published or (status in valid_status):
-            volume = zeit.archive.interfaces.IArchiveVolume(content, None)
-            if volume is not None:
-                volume.teaser = content
-                volume.cp = zeit.content.cp.centerpage.CenterPage()
-                volume.addTeaser()
+            index = zeit.archive.interfaces.IArchiveIndex(content, None)
+            if index is not None:
+                index.teaser = content
+                index.cp = zeit.content.cp.centerpage.CenterPage()
+                index.addTeaser()
 
 
 @zope.component.adapter(
     zeit.content.article.interfaces.IArticle,
     zeit.cms.workflow.interfaces.IBeforePublishEvent)
 def addContext(context, event):
-    volume = zeit.archive.interfaces.IArchiveVolume(context)
-    volume.addTeaser()
+    index = zeit.archive.interfaces.IArchiveIndex(context)
+    index.addTeaser()
 
 
 @zope.component.adapter(
     zeit.content.article.interfaces.IArticle,
     zeit.cms.repository.interfaces.IBeforeObjectRemovedEvent)
 def removeContext(context, event):
-    volume = zeit.archive.interfaces.IArchiveVolume(context)
-    volume.removeTeaser()
+    index = zeit.archive.interfaces.IArchiveIndex(context)
+    index.removeTeaser()
 
 
-class ArchiveVolume(object):
+class ArchiveIndex(object):
 
     zope.component.adapts(zeit.content.article.interfaces.IArticle)
-    zope.interface.implements(zeit.archive.interfaces.IArchiveVolume)
+    zope.interface.implements(zeit.archive.interfaces.IArchiveIndex)
 
     def __init__(self, context):
         self.context = context
@@ -149,5 +148,5 @@ class ArchiveVolume(object):
             if len(block) == 0:
                 del lead[block.__name__]
 
-    def _clearVolume(self, ndex_coll):
+    def _clearIndex(self, ndex_coll):
         del index_coll['index_new_archive']

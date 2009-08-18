@@ -2,7 +2,7 @@
    xmlns="http://namespaces.zope.org/zope"
    >
 
-  <adapter factory=".volume.ArchiveVolume" />
+  <adapter factory=".volume.ArchiveIndex" />
 
   <subscriber handler=".volume.addContext" />
   <subscriber handler=".volume.removeContext" />

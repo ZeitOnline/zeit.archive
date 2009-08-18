@@ -31,8 +31,8 @@ Create a new archive volume containing a single teaser.
 >>> with zeit.cms.checkout.helper.checked_out(article) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Reisen'
->>> volume = zeit.archive.interfaces.IArchiveVolume(article)
->>> volume.addTeaser()
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article)
+>>> archive_index.addTeaser()
 
 
 Archive volume should exist now.
@@ -71,7 +71,7 @@ Adding the same teaser again will not affect the volume.
 >>> with zeit.cms.checkout.helper.checked_out(article) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).page = 1
->>> volume.addTeaser()
+>>> archive_index.addTeaser()
 
 
 Archive year should now contain a teaser.
@@ -99,8 +99,8 @@ Add a teaser to an existing volume in the same ressort.
 ...         checked_out).printRessort = u'Reisen'
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).page = 1
->>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
->>> volume.addTeaser()
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article2)
+>>> archive_index.addTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
@@ -140,8 +140,8 @@ A teaser without a print ressort specified will not be added.
 
 >>> article3 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Martenstein')
->>> volume = zeit.archive.interfaces.IArchiveVolume(article3)
->>> volume.addTeaser()
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article3)
+>>> archive_index.addTeaser()
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
@@ -164,8 +164,8 @@ Add a teaser to an existing volume in a different ressort.
 >>> with zeit.cms.checkout.helper.checked_out(article3) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Leben'
->>> volume = zeit.archive.interfaces.IArchiveVolume(article3)
->>> volume.addTeaser()
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article3)
+>>> archive_index.addTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
@@ -181,8 +181,8 @@ Add a teaser to an existing volume in a different ressort.
 
 Remove a teaser from the archive.
 
->>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
->>> volume.removeTeaser()
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article2)
+>>> archive_index.removeTeaser()
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
@@ -213,7 +213,7 @@ Adapting only works with articles.
 
 >>> folder = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/')
->>> volume = zeit.archive.interfaces.IArchiveVolume(folder)
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(folder)
 Traceback (most recent call last):
 ...
 TypeError: ('Could not adapt', ...)
@@ -261,6 +261,8 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+    </block>
     <block href="http://xml.zeit.de/2007/01/Macher"...
     </block>
   </container>
