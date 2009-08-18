@@ -14,6 +14,14 @@ Traceback (most recent call last):
 TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/01/index_new_archive', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
 
 
+Archive year should not exist as well.
+
+>>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/index_new_archive')
+Traceback (most recent call last):
+...
+TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/index_new_archive', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
+
+
 Create a new archive volume containing a single teaser.
 
 >>> import zeit.archive.volume
@@ -50,6 +58,38 @@ Check content.
 <BLANKLINE>
 
 
+Archive year contains only articles from page 1, so it should still not exist.
+
+>>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/index_new_archive')
+Traceback (most recent call last):
+...
+TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/index_new_archive', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
+
+
+Adding the same teaser again will not affect the volume.
+
+>>> with zeit.cms.checkout.helper.checked_out(article) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).page = 1
+>>> volume.addTeaser()
+
+
+Archive year should now contain a teaser.
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
 Add a teaser to an existing volume in the same ressort.
 
 >>> article2 = zeit.cms.interfaces.ICMSContent(
@@ -57,6 +97,8 @@ Add a teaser to an existing volume in the same ressort.
 >>> with zeit.cms.checkout.helper.checked_out(article2) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Reisen'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).page = 1
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
 >>> volume.addTeaser()
 
@@ -65,6 +107,23 @@ Add a teaser to an existing volume in the same ressort.
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
+...
+    </block>
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
@@ -120,7 +179,7 @@ Add a teaser to an existing volume in a different ressort.
     <block href="http://xml.zeit.de/2007/01/Martenstein"...
 
 
-Remove a teaser from the volume.
+Remove a teaser from the archive.
 
 >>> volume = zeit.archive.interfaces.IArchiveVolume(article2)
 >>> volume.removeTeaser()
@@ -134,6 +193,19 @@ Remove a teaser from the volume.
       <supertitle py:pytype="str">Florida</supertitle>...
   <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
 ...
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...
+      <supertitle py:pytype="str">Florida</supertitle>
+...
+    </block>
+  </container>
+</region>
+<BLANKLINE>
 
 
 Adapting only works with articles.
@@ -156,12 +228,16 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> with zeit.cms.checkout.helper.checked_out(article4) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Wirtschaft'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).page = u'1'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
 >>> article5 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/02/Vita')
 >>> with zeit.cms.checkout.helper.checked_out(article5) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Feuilleton'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).page = u'1'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
 >>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/')
 
@@ -180,6 +256,20 @@ the resultset since our testarticles do not have set this attribute by default.
   <container cp:type="teaser" module="archive-print" cp:__name__="Feuilleton" title="Feuilleton">
     <block href="http://xml.zeit.de/2007/02/Vita"...
 
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Macher"...
+    </block>
+  </container>
+  <container cp:type="teaser" module="archive-print" cp:__name__="02" title="02">
+    <block href="http://xml.zeit.de/2007/02/Vita"...
+    </block>
+  </container>
+</region>
+
 
 Publish an article to test our event handler.
 
@@ -190,7 +280,7 @@ False
 >>> workflow.urgent = True
 >>> workflow.can_publish()
 True
->>> tid = publish.publish()
+>>> p = publish.publish()
 >>> import lovely.remotetask.interfaces
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
@@ -208,6 +298,7 @@ True
   <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
+
 
 Delete an article to test our event handler.
 
