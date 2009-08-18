@@ -331,6 +331,21 @@ Check attribute values.
 </centerpage>
 <BLANKLINE>
 
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index.xml, pretty_print=True)
+<centerpage ...>
+  <head>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="last_modified_by">zope.user</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/meta" name="type">centerpage-2009</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:5b15e4ec-be2d-461d-b717-cba15096e44e}</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="year">2007</attribute>
+  </head>
+...
+</centerpage>
+<BLANKLINE>
+
 
 
 Cleanup.

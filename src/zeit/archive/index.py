@@ -58,8 +58,12 @@ class ArchiveIndex(object):
             self.year_coll = self.teaser.__parent__.__parent__
 
     def addTeaser(self):
+        self.year = self.volume_coll.__parent__.__name__
+        self.volume = self.volume_coll.__name__
         self._addTeaserTo(self.volume_coll, self._createVolumeTeaser)
         if self.teaser.page == 1:
+            self.year = self.year_coll.__name__
+            self.volume = None
             self._addTeaserTo(self.year_coll, self._createYearTeaser)
 
     def removeTeaser(self):
@@ -75,8 +79,9 @@ class ArchiveIndex(object):
         else:
             index = zeit.content.cp.centerpage.CenterPage()
             index.type = 'archive-print'
-            index.volume = index_coll.__name__
-            index.year = index_coll.__parent__.__name__
+            index.year = self.year
+            if self.volume is not None:
+                index.volume = self.volume
             createTeaser(index)
             index_coll['index_new_archive'] = index
 
