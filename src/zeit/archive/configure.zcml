@@ -2,10 +2,10 @@
    xmlns="http://namespaces.zope.org/zope"
    >
 
-  <adapter factory=".volume.ArchiveIndex" />
+  <adapter factory=".index.ArchiveIndex" />
 
-  <subscriber handler=".volume.addContext" />
-  <subscriber handler=".volume.removeContext" />
+  <subscriber handler=".index.addContext" />
+  <subscriber handler=".index.removeContext" />
 
 </configure>
 

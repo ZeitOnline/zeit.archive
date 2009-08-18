@@ -24,7 +24,7 @@ TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/index_new_archive', <Int
 
 Create a new archive volume containing a single teaser.
 
->>> import zeit.archive.volume
+>>> import zeit.archive.index
 >>> principal = zeit.cms.testing.create_interaction()
 >>> article = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Miami')
@@ -239,7 +239,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).page = u'1'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
->>> zeit.archive.volume.rebuildVolume('http://xml.zeit.de/2007/')
+>>> zeit.archive.index.rebuildVolume('http://xml.zeit.de/2007/')
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')

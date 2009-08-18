@@ -22,6 +22,6 @@ setup(
         ],
     entry_points = """
         [console_scripts]
-        volume-builder = zeit.archive.worker:build_main
+        archive-index-builder = zeit.archive.worker:build_main
         """
 )
