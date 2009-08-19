@@ -48,7 +48,7 @@ Check content.
 >>> import lxml.etree
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
@@ -80,7 +80,7 @@ Archive year should now contain a teaser.
 ...     'http://xml.zeit.de/2007/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
     <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
@@ -106,7 +106,7 @@ Add a teaser to an existing volume in the same ressort.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
@@ -123,7 +123,7 @@ Add a teaser to an existing volume in the same ressort.
 ...     'http://xml.zeit.de/2007/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
@@ -146,7 +146,7 @@ A teaser without a print ressort specified will not be added.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl" ...
 ...
     </block>
@@ -171,11 +171,11 @@ Add a teaser to an existing volume in a different ressort.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Momente-Uhl"...
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
-  <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Leben" title="Leben">
     <block href="http://xml.zeit.de/2007/01/Martenstein"...
 
 
@@ -188,17 +188,17 @@ Remove a teaser from the archive.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
-  <container cp:type="teaser" module="archive-print" cp:__name__="Leben" title="Leben">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Leben" title="Leben">
 ...
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
     <block href="http://xml.zeit.de/2007/01/Miami" ...
       <supertitle py:pytype="str">Florida</supertitle>
 ...
@@ -245,7 +245,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher"...
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
 
@@ -253,20 +253,20 @@ the resultset since our testarticles do not have set this attribute by default.
 ...     'http://xml.zeit.de/2007/02/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Feuilleton" title="Feuilleton">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Feuilleton" title="Feuilleton">
     <block href="http://xml.zeit.de/2007/02/Vita"...
 
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="01" title="01">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
     <block href="http://xml.zeit.de/2007/01/Miami"...
     </block>
     <block href="http://xml.zeit.de/2007/01/Macher"...
     </block>
   </container>
-  <container cp:type="teaser" module="archive-print" cp:__name__="02" title="02">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="02" title="02">
     <block href="http://xml.zeit.de/2007/02/Vita"...
     </block>
   </container>
@@ -294,10 +294,10 @@ True
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Wirtschaft" title="Wirtschaft">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher"...
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
 
@@ -310,7 +310,7 @@ Delete an article to test our event handler.
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
-  <container cp:type="teaser" module="archive-print" cp:__name__="Reisen" title="Reisen">
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
 
@@ -318,7 +318,7 @@ Delete an article to test our event handler.
 Check attribute values.
 
 >>> print lxml.etree.tostring(index.xml, pretty_print=True)
-<centerpage ...>
+<centerpage ... type="archive-print-volume">
   <head>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="last_modified_by">zope.user</attribute>
@@ -334,7 +334,7 @@ Check attribute values.
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/index_new_archive')
 >>> print lxml.etree.tostring(index.xml, pretty_print=True)
-<centerpage ...>
+<centerpage ... type="archive-print-year">
   <head>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="last_modified_by">zope.user</attribute>

@@ -6,6 +6,8 @@ zeit.archive changes
 
 - Jahresindex für Print-Archivseiten hinzugefügt.
 
+- Layout für Printarchivseiten in Volume und Year unterteilt.
+
 0.1 (2009-07-29)
 ================
 

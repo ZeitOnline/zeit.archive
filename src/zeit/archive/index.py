@@ -58,10 +58,12 @@ class ArchiveIndex(object):
             self.year_coll = self.teaser.__parent__.__parent__
 
     def addTeaser(self):
+        self.type = 'archive-print-volume'
         self.year = self.volume_coll.__parent__.__name__
         self.volume = self.volume_coll.__name__
         self._addTeaserTo(self.volume_coll, self._createVolumeTeaser)
         if self.teaser.page == 1:
+            self.type = 'archive-print-year'
             self.year = self.year_coll.__name__
             self.volume = None
             self._addTeaserTo(self.year_coll, self._createYearTeaser)
@@ -78,7 +80,7 @@ class ArchiveIndex(object):
                 createTeaser(co)
         else:
             index = zeit.content.cp.centerpage.CenterPage()
-            index.type = 'archive-print'
+            index.type = self.type
             index.year = self.year
             if self.volume is not None:
                 index.volume = self.volume
@@ -97,7 +99,7 @@ class ArchiveIndex(object):
             factory = zope.component.getAdapter(
                 lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
             block = factory()
-            layout = zeit.content.cp.layout.get_layout('archive-print')
+            layout = zeit.content.cp.layout.get_layout(self.type)
             block.layout = layout
             block.__name__ = ressort
             block.title = ressort
@@ -114,7 +116,7 @@ class ArchiveIndex(object):
             factory = zope.component.getAdapter(
                 lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
             block = factory()
-            layout = zeit.content.cp.layout.get_layout('archive-print')
+            layout = zeit.content.cp.layout.get_layout(self.type)
             block.layout = layout
             block.__name__ = volume
             block.title = volume
