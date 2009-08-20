@@ -3,6 +3,8 @@
    >
 
   <adapter factory=".index.ArchiveIndex" />
+  <adapter factory=".index.ArchiveVolume" />
+  <adapter factory=".index.ArchiveYear" />
 
   <subscriber handler=".index.addContext" />
   <subscriber handler=".index.removeContext" />

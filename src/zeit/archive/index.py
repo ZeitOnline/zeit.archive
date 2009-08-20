@@ -54,106 +54,96 @@ class ArchiveIndex(object):
         self.context = context
         if not zeit.cms.repository.interfaces.ICollection.providedBy(context):
             self.teaser = context
-            self.volume_coll = self.teaser.__parent__
-            self.year_coll = self.teaser.__parent__.__parent__
+            self.volume = zeit.archive.interfaces.IArchiveVolume(context)
+            self.year = zeit.archive.interfaces.IArchiveYear(context)
+            #self.volume_coll = self.teaser.__parent__
+            #self.year_coll = self.teaser.__parent__.__parent__
 
     def addTeaser(self):
-        self.type = 'archive-print-volume'
-        self.year = self.volume_coll.__parent__.__name__
-        self.volume = self.volume_coll.__name__
-        self._addTeaserTo(self.volume_coll, self._createVolumeTeaser)
+        if self.volume.name is None:
+            return
+        self._addTeaserTo(self.volume)
         if self.teaser.page == 1:
-            self.type = 'archive-print-year'
-            self.year = self.year_coll.__name__
-            self.volume = None
-            self._addTeaserTo(self.year_coll, self._createYearTeaser)
+            self._addTeaserTo(self.year)
 
     def removeTeaser(self):
-        self._removeVolumeTeaser()
+        if self.volume.name is None:
+            return
+        self._removeTeaser(self.volume)
         if self.teaser.page == 1:
-            self._removeYearTeaser()
+            self._removeTeaser(self.year)
 
-    def _addTeaserTo(self, index_coll, createTeaser):
-        if 'index_new_archive' in index_coll:
-            index = index_coll['index_new_archive']
-            with zeit.cms.checkout.helper.checked_out(index) as co:
-                createTeaser(co)
+    def _addTeaserTo(self, archiv):
+        if 'index_new_archive' in archiv.index_coll:
+            index = archiv.index_coll['index_new_archive']
+            with zeit.cms.checkout.helper.checked_out(index, events=False) as co:
+                archiv.index = co
+                self._createTeaser(archiv)
         else:
             index = zeit.content.cp.centerpage.CenterPage()
-            index.type = self.type
-            index.year = self.year
-            if self.volume is not None:
-                index.volume = self.volume
-            createTeaser(index)
-            index_coll['index_new_archive'] = index
+            index.type = archiv.type
+            index.year = archiv.year
+            if archiv.volume is not None:
+                index.volume = archiv.volume
+            archiv.index = index
+            self._createTeaser(archiv)
+            archiv.index_coll['index_new_archive'] = archiv.index
 
-    def _createVolumeTeaser(self, index):
-        meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
-        if meta is None:
-            return
-        ressort = meta.printRessort
-        if ressort is None:
-            return
-        lead = index['lead']
-        if ressort not in lead:
+    def _createTeaser(self, archiv):
+        lead = archiv.index['lead']
+        if archiv.name not in lead:
             factory = zope.component.getAdapter(
                 lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
             block = factory()
-            layout = zeit.content.cp.layout.get_layout(self.type)
+            layout = zeit.content.cp.layout.get_layout(archiv.type)
             block.layout = layout
-            block.__name__ = ressort
-            block.title = ressort
+            block.__name__ = archiv.name
+            block.title = archiv.name
         else:
-            block = lead[ressort]
+            block = lead[archiv.name]
         block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
 
-    def _createYearTeaser(self, index):
-        volume = self.volume_coll.__name__
-        if volume is None:
-            return
-        lead = index['lead']
-        if volume not in lead:
-            factory = zope.component.getAdapter(
-                lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
-            block = factory()
-            layout = zeit.content.cp.layout.get_layout(self.type)
-            block.layout = layout
-            block.__name__ = volume
-            block.title = volume
-        else:
-            block = lead[volume]
-        block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
-
-    def _removeVolumeTeaser(self):
-        meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
-        if meta is None:
-            return
-        ressort = meta.printRessort
-        if ressort is None:
-            return
-        index = self.volume_coll['index_new_archive']
+    def _removeTeaser(self, archiv):
+        index = archiv.index_coll['index_new_archive']
         with zeit.cms.checkout.helper.checked_out(index) as co:
             lead = co['lead']
-            if ressort not in lead:
+            if archiv.name not in lead:
                 return
-            block = lead[ressort]
+            block = lead[archiv.name]
             block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
             if len(block) == 0:
                 del lead[block.__name__]
 
-    def _removeYearTeaser(self):
-        volume = self.volume_coll.__name__
-        if volume is None:
-            return
-        index = self.year_coll['index_new_archive']
-        with zeit.cms.checkout.helper.checked_out(index) as co:
-            lead = co['lead']
-            if volume not in lead:
-                return
-            block = lead[volume]
-            block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
-            if len(block) == 0:
-                del lead[block.__name__]
+    def _clearIndex(self):
+        del self.index_coll['index_new_archive']
 
-    def _clearIndex(self, ndex_coll):
-        del index_coll['index_new_archive']
+
+class ArchiveVolume(object):
+
+    zope.component.adapts(zeit.content.article.interfaces.IArticle)
+    zope.interface.implements(zeit.archive.interfaces.IArchiveVolume)
+
+    def __init__(self, teaser):
+        self.teaser = teaser
+        self.type = 'archive-print-volume'
+        self.index_coll = teaser.__parent__
+        self.volume = teaser.__parent__.__name__
+        self.year = teaser.__parent__.__parent__.__name__
+        meta = zeit.cms.content.interfaces.ICommonMetadata(self.teaser, None)
+        if meta is not None:
+            self.name = meta.printRessort
+
+
+class ArchiveYear(object):
+
+    zope.component.adapts(zeit.content.article.interfaces.IArticle)
+    zope.interface.implements(zeit.archive.interfaces.IArchiveYear)
+
+    def __init__(self, teaser):
+        self.teaser = teaser
+        self.type = 'archive-print-year'
+        self.index_coll = teaser.__parent__.__parent__
+        self.volume = None
+        self.year = teaser.__parent__.__parent__.__name__
+        self.name = teaser.__parent__.__name__
+
