@@ -1,10 +1,10 @@
 zeit.archive changes
 ====================
 
-0.3 (unreleased)
+0.2.1 (unreleased)
 ================
 
-- Nothing changed yet.
+- Rekursive Indizierung alter Ausgaben neu geschrieben.
 
 
 0.2 (2009-08-21)
