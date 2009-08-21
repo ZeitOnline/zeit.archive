@@ -28,7 +28,10 @@ def rebuildVolume(id):
             index_volume = zeit.content.cp.centerpage.CenterPage()
             index_volume.type = 'archive-print-volume'
             index_volume.year = content.__parent__.__name__
-            for article in content.values():
+            for resource in content.values():
+                article = zeit.content.article.interfaces.IArticle(resource, None)
+                if article is None:
+                    continue
                 pubinfo = zeit.cms.workflow.interfaces.IPublishInfo(article)
                 published = pubinfo.published
                 status = zeit.workflow.interfaces.IOldCMSStatus(article).status
