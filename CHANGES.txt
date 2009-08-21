@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.2 (unreleased)
+0.2 (2009-08-21)
 ================
 
 - Jahresindex für Print-Archivseiten hinzugefügt.
