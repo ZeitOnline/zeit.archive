@@ -10,23 +10,42 @@ import zope.interface
 
 
 def rebuildVolume(id):
+    valid_status = ['OK', 'imported', 'importedVHB']
+    index_year = zeit.content.cp.centerpage.CenterPage()
+    index_year.type = 'archive-print-year'
     start_container = zeit.cms.interfaces.ICMSContent(id)
     stack = [start_container]
     while stack:
         content = stack.pop(0)
-        publish = zeit.cms.workflow.interfaces.IPublishInfo(content)
-        status = zeit.workflow.interfaces.IOldCMSStatus(content).status
-        valid_status = ['OK', 'imported', 'importedVHB']
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
             if 'index_new_archive' in content:
                 del content['index_new_archive']
             stack.extend(content.values())
-        elif publish.published or (status in valid_status):
-            index = zeit.archive.interfaces.IArchiveIndex(content, None)
-            if index is not None:
-                index.teaser = content
-                index.cp = zeit.content.cp.centerpage.CenterPage()
-                index.addTeaser()
+            if content.__parent__.__name__ == 'repository':
+                index_year.year = content.__name__
+                continue
+            year_coll = content.__parent__
+            index_volume = zeit.content.cp.centerpage.CenterPage()
+            index_volume.type = 'archive-print-volume'
+            index_volume.year = content.__parent__.__name__
+            for article in content.values():
+                pubinfo = zeit.cms.workflow.interfaces.IPublishInfo(article)
+                published = pubinfo.published
+                status = zeit.workflow.interfaces.IOldCMSStatus(article).status
+                if (published == False) and (status not in valid_status):
+                    continue
+                archive_index = zeit.archive.interfaces.IArchiveIndex(article)
+                archive_volume = zeit.archive.interfaces.IArchiveVolume(article)
+                archive_year = zeit.archive.interfaces.IArchiveYear(article)
+                if archive_volume.name is None:
+                    continue
+                archive_volume.index = index_volume
+                archive_index._createTeaser(archive_volume)
+                if article.page == 1:
+                    archive_year.index = index_year
+                    archive_index._createTeaser(archive_year)
+            content['index_new_archive'] = index_volume
+    year_coll['index_new_archive'] = index_year
 
 
 @zope.component.adapter(
@@ -56,8 +75,6 @@ class ArchiveIndex(object):
             self.teaser = context
             self.volume = zeit.archive.interfaces.IArchiveVolume(context)
             self.year = zeit.archive.interfaces.IArchiveYear(context)
-            #self.volume_coll = self.teaser.__parent__
-            #self.year_coll = self.teaser.__parent__.__parent__
 
     def addTeaser(self):
         if self.volume.name is None:
