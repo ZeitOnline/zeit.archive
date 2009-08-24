@@ -18,16 +18,17 @@ def rebuildVolume(id):
     while stack:
         content = stack.pop(0)
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
+            stack.extend(content.values())
             if 'index_new_archive' in content:
                 del content['index_new_archive']
-            stack.extend(content.values())
             if content.__parent__.__name__ == 'repository':
                 index_year.year = content.__name__
+                year_coll = content
                 continue
-            year_coll = content.__parent__
             index_volume = zeit.content.cp.centerpage.CenterPage()
             index_volume.type = 'archive-print-volume'
             index_volume.year = content.__parent__.__name__
+            index_volume.volume = content.__name__
             for resource in content.values():
                 article = zeit.content.article.interfaces.IArticle(resource, None)
                 if article is None:
