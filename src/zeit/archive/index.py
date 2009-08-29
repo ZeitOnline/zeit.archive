@@ -96,7 +96,10 @@ class ArchiveIndex(object):
 
     def _addTeaserTo(self, archiv):
         if 'index_new_archive' in archiv.index_coll:
-            index = archiv.index_coll['index_new_archive']
+            index = zeit.content.cp.interfaces.ICenterPage(
+                archiv.index_coll['index_new_archive'], None)
+            if index is None:
+                return
             with zeit.cms.checkout.helper.checked_out(index, events=False) as co:
                 archiv.index = co
                 self._createTeaser(archiv)
@@ -125,7 +128,10 @@ class ArchiveIndex(object):
         block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
 
     def _removeTeaser(self, archiv):
-        index = archiv.index_coll['index_new_archive']
+        index = zeit.content.cp.interfaces.ICenterPage(
+            archiv.index_coll['index_new_archive'], None)
+        if index is None:
+            return
         with zeit.cms.checkout.helper.checked_out(index) as co:
             lead = co['lead']
             if archiv.name not in lead:
