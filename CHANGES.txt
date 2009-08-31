@@ -6,7 +6,8 @@ zeit.archive changes
 
 - Rekursive Indizierung alter Ausgaben neu geschrieben.
 
-- Der Archiv-Index muss eine Centerpage sein (#6123).
+- Der Archiv-Index muss eine Centerpage sein. Ist sie das nicht, wird das
+  Objekt überschrieben (#6123).
 
 
 0.2 (2009-08-21)

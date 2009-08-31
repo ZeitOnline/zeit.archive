@@ -304,7 +304,8 @@ True
 
 Delete an article to test our event handler.
 
->>> repository = zope.component.getUtility(zeit.cms.repository.interfaces.IRepository)
+>>> repository = zope.component.getUtility(
+...     zeit.cms.repository.interfaces.IRepository)
 >>> del repository['2007']['01']['Macher']
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
@@ -347,3 +348,31 @@ Check attribute values.
 <BLANKLINE>
 
 
+When the archive CP isn't a CP but some other object it will just be
+overwritten:
+
+>>> import zeit.cms.repository.file
+>>> repository['2007']['01']['index_new_archive'] = (
+...     zeit.cms.repository.file.LocalFile())
+>>> article = zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/Martenstein')
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article)
+>>> workflow.published
+False
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> p = publish.publish()
+>>> import lovely.remotetask.interfaces
+>>> import zope.component
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index_new_archive')
+>>> list(index['lead'])
+['Leben']
