@@ -272,7 +272,24 @@ the resultset since our testarticles do not have set this attribute by default.
 </region>
 
 
-Publish an article to test our event handler.
+Clean up to test our event handler.
+
+>>> import lovely.remotetask.interfaces
+>>> import zope.component
+>>> repository = zope.component.getUtility(
+...     zeit.cms.repository.interfaces.IRepository)
+>>> del repository['2007']['01']['index_new_archive']
+>>> print zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index_new_archive', None)
+None
+
+>>> del repository['2007']['index_new_archive']
+>>> print zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive', None)
+None
+
+
+Publish an unpublished article.
 
 >>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
 >>> publish = zeit.cms.workflow.interfaces.IPublish(article)
@@ -282,8 +299,23 @@ False
 >>> workflow.can_publish()
 True
 >>> p = publish.publish()
->>> import lovely.remotetask.interfaces
->>> import zope.component
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+
+
+Publish an already published article.
+
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article4)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article4)
+>>> workflow.published
+True
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> p = publish.publish()
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
 >>> tasks.process()
@@ -294,10 +326,26 @@ True
 ...     'http://xml.zeit.de/2007/01/index_new_archive')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
 <region ...>
+  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
+    <block href="http://xml.zeit.de/2007/01/Miami"...
+      <supertitle py:pytype="str">Florida</supertitle>...
   <container cp:type="teaser" module="archive-print-volume" cp:__name__="Wirtschaft" title="Wirtschaft">
     <block href="http://xml.zeit.de/2007/01/Macher"...
       <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
-  <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
+
+>>> with zeit.cms.checkout.helper.checked_out(article4) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).printRessort = u'Wirtschaft'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).page = u'1'
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Macher"...
+      <supertitle py:pytype="str">Entwicklungshilfe</supertitle>...
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
 
