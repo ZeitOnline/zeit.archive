@@ -4,7 +4,7 @@ zeit.archive changes
 0.4 (unreleased)
 ================
 
-- Jeder erschienene Ausgabe in der Jahresübersichtsseite enthält nun auch
+- Jede erschienene Ausgabe in der Jahresübersichtsseite enthält nun auch
   dann einen Container, wenn noch keine Seite 1 veröffentlicht wurde.
 
 
