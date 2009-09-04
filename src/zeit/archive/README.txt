@@ -57,12 +57,18 @@ Check content.
 <BLANKLINE>
 
 
-Archive year contains only articles from page 1, so it should still not exist.
+Archive year contains only articles from page 1, so there is only a container.
 
 >>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/index_new_archive')
-Traceback (most recent call last):
-...
-TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/index_new_archive', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
+<zeit.content.cp.centerpage.CenterPage object at 0x...>
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index_new_archive')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region ...>
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01"/>
+</region>
+<BLANKLINE>
 
 
 Adding the same teaser again will not affect the volume.

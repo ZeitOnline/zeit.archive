@@ -84,6 +84,8 @@ class ArchiveIndex(object):
         self._addTeaserTo(self.volume)
         if self.teaser.page == 1:
             self._addTeaserTo(self.year)
+        elif 'index_new_archive' not in self.year.index_coll:
+            self._addTeaserTo(self.year, dummy=True)
 
     def removeTeaser(self):
         if self.volume.name is None:
@@ -92,7 +94,7 @@ class ArchiveIndex(object):
         if self.teaser.page == 1:
             self._removeTeaser(self.year)
 
-    def _addTeaserTo(self, archiv):
+    def _addTeaserTo(self, archiv, dummy=False):
         index = archiv.index
         if index is None:
             index = zeit.content.cp.centerpage.CenterPage()
@@ -100,14 +102,14 @@ class ArchiveIndex(object):
             index.year = archiv.year
             if archiv.volume is not None:
                 index.volume = archiv.volume
-            self._createTeaser(archiv, index)
+            self._createTeaser(archiv, index, dummy)
             archiv.create(index)
         else:
             with zeit.cms.checkout.helper.checked_out(
                 index, events=False) as co:
                 self._createTeaser(archiv, co)
 
-    def _createTeaser(self, archiv, index):
+    def _createTeaser(self, archiv, index, dummy=False):
         lead = index['lead']
         if archiv.name in lead:
             block = lead[archiv.name]
@@ -119,7 +121,8 @@ class ArchiveIndex(object):
             block.layout = layout
             block.__name__ = archiv.name
             block.title = archiv.name
-        block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
+        if dummy == False:
+            block.insert(0, zeit.cms.interfaces.ICMSContent(self.teaser))
 
     def _removeTeaser(self, archiv):
         index = archiv.index
