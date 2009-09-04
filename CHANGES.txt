@@ -4,7 +4,8 @@ zeit.archive changes
 0.4 (unreleased)
 ================
 
-- Nothing changed yet.
+- Jeder erschienene Ausgabe in der Jahresübersichtsseite enthält nun auch
+  dann einen Container, wenn noch keine Seite 1 veröffentlicht wurde.
 
 
 0.3 (2009-08-31)
