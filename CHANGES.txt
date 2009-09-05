@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.4 (unreleased)
+0.4 (2009-09-05)
 ================
 
 - Jede erschienene Ausgabe in der Jahresübersichtsseite enthält nun auch
