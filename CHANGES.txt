@@ -7,6 +7,8 @@ zeit.archive changes
 - Jede erschienene Ausgabe in der Jahresübersichtsseite enthält nun auch
   dann einen Container, wenn noch keine Seite 1 veröffentlicht wurde.
 
+- Korrekte Bezeichnung der Index-Seiten.
+
 
 0.3 (2009-08-31)
 ================

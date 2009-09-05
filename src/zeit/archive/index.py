@@ -19,8 +19,8 @@ def rebuildVolume(id):
         content = stack.pop(0)
         if zeit.cms.repository.interfaces.ICollection.providedBy(content):
             stack.extend(content.values())
-            if 'index_new_archive' in content:
-                del content['index_new_archive']
+            if 'index' in content:
+                del content['index']
             if content.__parent__.__name__ == 'repository':
                 index_year.year = content.__name__
                 year_coll = content
@@ -46,8 +46,8 @@ def rebuildVolume(id):
                 archive_index._createTeaser(archive_volume, index_volume)
                 if article.page == 1:
                     archive_index._createTeaser(archive_year, index_year)
-            content['index_new_archive'] = index_volume
-    year_coll['index_new_archive'] = index_year
+            content['index'] = index_volume
+    year_coll['index'] = index_year
 
 
 @zope.component.adapter(
@@ -84,7 +84,7 @@ class ArchiveIndex(object):
         self._addTeaserTo(self.volume)
         if self.teaser.page == 1:
             self._addTeaserTo(self.year)
-        elif 'index_new_archive' not in self.year.index_coll:
+        elif 'index' not in self.year.index_coll:
             self._addTeaserTo(self.year, dummy=True)
 
     def removeTeaser(self):
@@ -140,7 +140,7 @@ class ArchiveIndex(object):
 
 class ArchiveBase(object):
 
-    archive_name = 'index_new_archive'
+    archive_name = 'index'
 
     @property
     def index(self):
