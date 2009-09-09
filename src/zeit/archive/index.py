@@ -61,9 +61,19 @@ def addContext(context, event):
 @zope.component.adapter(
     zeit.content.article.interfaces.IArticle,
     zeit.cms.repository.interfaces.IBeforeObjectRemovedEvent)
-def removeContext(context, event):
+def removeContextWhenRemoved(context, event):
     index = zeit.archive.interfaces.IArchiveIndex(context)
     index.removeTeaser()
+
+
+@zope.component.adapter(
+    zeit.content.article.interfaces.IArticle,
+    zeit.cms.workflow.interfaces.IBeforeRetractEvent)
+def removeContextWhenRetract(context, event):
+    index = zeit.archive.interfaces.IArchiveIndex(context)
+    index.removeTeaser()
+
+
 
 
 class ArchiveIndex(object):

@@ -7,7 +7,8 @@
   <adapter factory=".index.ArchiveYear" />
 
   <subscriber handler=".index.addContext" />
-  <subscriber handler=".index.removeContext" />
+  <subscriber handler=".index.removeContextWhenRemoved" />
+  <subscriber handler=".index.removeContextWhenRetract" />
 
 </configure>
 

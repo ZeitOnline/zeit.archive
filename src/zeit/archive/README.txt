@@ -356,6 +356,44 @@ True
       <supertitle py:pytype="str">Florida</supertitle>...
 
 
+
+
+Retract an article to test our event handler
+
+>>> dumb = publish.retract()
+>>> dumb = tasks.process()
+>>> workflow.published
+False
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/index')
+>>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
+<region xmlns:cp="http://namespaces.zeit.de/CMS/cp" xmlns:py="http://codespeak.net/lxml/objectify/pytype" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" area="lead">
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="01" title="01">
+    <block href="http://xml.zeit.de/2007/01/Miami" ...>
+      <supertitle py:pytype="str">Florida</supertitle>
+      <title py:pytype="str">Wir stylen durch bis morgen fr&#252;h</title>
+      <text py:pytype="str">Miami ist die Partyhauptstadt der USA. Ob am Hotelpool oder im ehemaligen Depot f&#252;r sichergestellte Drogen, &#252;berall wird gek&#252;sst, getanzt und geprahlt. Allein w&#228;hrend der Art Basel fanden 7000 Feste statt. </text>
+      <description py:pytype="str">Miami ist die Partyhauptstadt der USA. Ob am Hotelpool oder im ehemaligen Depot f&#252;r sichergestellte Drogen, &#252;berall wird gek&#252;sst, getanzt und geprahlt. Allein w&#228;hrend der Art Basel fanden 7000 Feste statt. </description>
+      <byline py:pytype="str">Von Tomas Niederberghaus</byline>
+    </block>
+  </container>
+</region>
+<BLANKLINE>
+
+
+
+
+Publish again because we nedd it later
+>>> dumb = publish.publish()
+>>> dumb = tasks.process()
+>>> workflow.published
+True
+
+
+
+
+
+
 Delete an article to test our event handler.
 
 >>> repository = zope.component.getUtility(
@@ -368,6 +406,9 @@ Delete an article to test our event handler.
   <container cp:type="teaser" module="archive-print-volume" cp:__name__="Reisen" title="Reisen">
     <block href="http://xml.zeit.de/2007/01/Miami"...
       <supertitle py:pytype="str">Florida</supertitle>...
+
+
+
 
 
 Check attribute values.
