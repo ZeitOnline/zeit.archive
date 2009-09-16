@@ -6,6 +6,8 @@ zeit.archive changes
 
 - Neuer Eventhandler für zurückgezogene Artikel.
 
+- Automatische Veröffentlichung von Archivseiten.
+
 
 0.4 (2009-09-05)
 ================
