@@ -278,10 +278,18 @@ the resultset since our testarticles do not have set this attribute by default.
 </region>
 
 
-Clean up to test our event handler.
+The index should not be published yet.
 
 >>> import lovely.remotetask.interfaces
 >>> import zope.component
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(index)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(index)
+>>> workflow.published
+False
+
+
+Clean up to test our event handler.
+
 >>> repository = zope.component.getUtility(
 ...     zeit.cms.repository.interfaces.IRepository)
 >>> del repository['2007']['01']['index']
@@ -308,6 +316,14 @@ True
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
 >>> tasks.process()
+>>> workflow.published
+True
+
+
+Publishing an article will autmatically publish the index as well.
+
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(index)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(index)
 >>> workflow.published
 True
 
@@ -356,8 +372,6 @@ True
       <supertitle py:pytype="str">Florida</supertitle>...
 
 
-
-
 Retract an article to test our event handler
 
 >>> dumb = publish.retract()
@@ -381,17 +395,11 @@ False
 <BLANKLINE>
 
 
-
-
 Publish again because we nedd it later
 >>> dumb = publish.publish()
 >>> dumb = tasks.process()
 >>> workflow.published
 True
-
-
-
-
 
 
 Delete an article to test our event handler.
@@ -408,19 +416,21 @@ Delete an article to test our event handler.
       <supertitle py:pytype="str">Florida</supertitle>...
 
 
-
-
-
 Check attribute values.
 
 >>> print lxml.etree.tostring(index.xml, pretty_print=True)
 <centerpage ... type="archive-print-volume">
   <head>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date_first_released">...</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="date_last_published">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="last_modified_by">zope.user</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="published">yes</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="status">OK</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/meta" name="type">centerpage-2009</attribute>
-    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:5b15e4ec-be2d-461d-b717-cba15096e44e}</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:a344095a-236c-4d2e-8ad0-5b86363cb6ae}</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="volume">01</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="was_automatically_syndicated_into"/>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="year">2007</attribute>
   </head>
 ...
@@ -433,9 +443,14 @@ Check attribute values.
 <centerpage ... type="archive-print-year">
   <head>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date_first_released">...</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="date_last_published">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="last_modified_by">zope.user</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="published">yes</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="status">OK</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/meta" name="type">centerpage-2009</attribute>
-    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:5b15e4ec-be2d-461d-b717-cba15096e44e}</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:c37e3932-5c05-41e6-a143-b14ca2f674f5}</attribute>
+    <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="was_automatically_syndicated_into"/>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="year">2007</attribute>
   </head>
 ...
