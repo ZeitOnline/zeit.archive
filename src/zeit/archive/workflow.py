@@ -29,7 +29,7 @@ class PublicationDependencies(object):
                 self.context.__parent__['index'], None)
         if volume_index is not None:
             indexes.append(volume_index)
-        if 'index' in self.context.__parent__:
+        if 'index' in self.context.__parent__.__parent__:
             year_index = zeit.content.cp.interfaces.ICenterPage(
                 self.context.__parent__.__parent__['index'], None)
         if year_index is not None:
