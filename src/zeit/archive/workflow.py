@@ -22,12 +22,16 @@ class PublicationDependencies(object):
 
     def get_dependencies(self):
         indexes = []
-        volume_index = zeit.content.cp.interfaces.ICenterPage(
-            self.context.__parent__['index'], None)
+        volume_index = None
+        year_index = None
+        if 'index' in self.context.__parent__:
+            volume_index = zeit.content.cp.interfaces.ICenterPage(
+                self.context.__parent__['index'], None)
         if volume_index is not None:
             indexes.append(volume_index)
-        year_index = zeit.content.cp.interfaces.ICenterPage(
-            self.context.__parent__.__parent__['index'], None)
+        if 'index' in self.context.__parent__:
+            year_index = zeit.content.cp.interfaces.ICenterPage(
+                self.context.__parent__.__parent__['index'], None)
         if year_index is not None:
             indexes.append(year_index)
         return indexes

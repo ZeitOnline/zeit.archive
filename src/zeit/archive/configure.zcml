@@ -5,7 +5,7 @@
   <adapter factory=".index.ArchiveIndex" />
   <adapter factory=".index.ArchiveVolume" />
   <adapter factory=".index.ArchiveYear" />
-  <adapter factory=".workflow.PublicationDependencies" />
+  <adapter factory=".workflow.PublicationDependencies" name="zeit.archive"/>
 
   <subscriber handler=".index.addContext" />
   <subscriber handler=".index.removeContextWhenRemoved" />
