@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.5 (unreleased)
+0.5 (2009-10-05)
 ================
 
 - Neuer Eventhandler für zurückgezogene Artikel.
