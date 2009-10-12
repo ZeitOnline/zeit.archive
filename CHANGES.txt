@@ -4,7 +4,8 @@ zeit.archive changes
 0.5.2 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Für die Jahresübersichtsseite werden Container nun auch über
+  die Methode rebuildVolume korrekt angelegt (siehe 0.4).
 
 
 0.5.1 (2009-10-12)

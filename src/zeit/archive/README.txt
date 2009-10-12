@@ -241,8 +241,6 @@ the resultset since our testarticles do not have set this attribute by default.
 >>> with zeit.cms.checkout.helper.checked_out(article5) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Feuilleton'
-...     zeit.cms.content.interfaces.ICommonMetadata(
-...         checked_out).page = u'1'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
 >>> zeit.archive.index.rebuildVolume('http://xml.zeit.de/2007/')
 
@@ -261,6 +259,10 @@ the resultset since our testarticles do not have set this attribute by default.
   <container cp:type="teaser" module="archive-print-volume" cp:__name__="Feuilleton" title="Feuilleton">
     <block href="http://xml.zeit.de/2007/02/Vita"...
 
+
+Archive year will contain the full information for every page 1 and a simple
+container for any other page.
+
 >>> index =  zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/index')
 >>> print lxml.etree.tostring(index['lead'].xml, pretty_print=True)
@@ -271,10 +273,7 @@ the resultset since our testarticles do not have set this attribute by default.
     <block href="http://xml.zeit.de/2007/01/Macher"...
     </block>
   </container>
-  <container cp:type="teaser" module="archive-print-year" cp:__name__="02" title="02">
-    <block href="http://xml.zeit.de/2007/02/Vita"...
-    </block>
-  </container>
+  <container cp:type="teaser" module="archive-print-year" cp:__name__="02" title="02"/>
 </region>
 
 

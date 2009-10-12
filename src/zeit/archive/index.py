@@ -46,6 +46,9 @@ def rebuildVolume(id):
                 archive_index._createTeaser(archive_volume, index_volume)
                 if article.page == 1:
                     archive_index._createTeaser(archive_year, index_year)
+                elif 'index' not in archive_year.index_coll:
+                    archive_index._createTeaser(
+                        archive_year, index_year, dummy=True)
             content['index'] = index_volume
     year_coll['index'] = index_year
 
