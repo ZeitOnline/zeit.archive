@@ -1,9 +1,11 @@
-import unittest
-import pkg_resources
-import zeit.cms.testing
-import zeit.content.cp.testing
 from zope.testing import doctest
+import pkg_resources
+import unittest
+import zeit.cms.testing
+import zeit.content.article.tests
+import zeit.content.cp.testing
 import zope.app.testing.functional
+
 
 ArchiveLayer = zope.app.testing.functional.ZCMLLayer(
     pkg_resources.resource_filename(__name__, 'ftesting.zcml'),
@@ -23,9 +25,11 @@ def test_suite():
         'README.txt',
         layer=ArchiveLayer,
         product_config={
+            'zeit.content.article': zeit.content.article.tests.product_config,
             'zeit.content.cp': cp_config,
             'zeit.workflow': {'publish-script': 'cat',
-                              'path-prefix': ''}
+                              'retract-script': 'cat',
+                              'path-prefix': ''},
         }
     ))
 
