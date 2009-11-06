@@ -12,7 +12,7 @@ import zope.interface
 def rebuildVolume(id):
     valid_status = ['OK', 'imported', 'importedVHB']
     index_year = zeit.content.cp.centerpage.CenterPage()
-    index_year.type = 'archive-print-year'
+    index_year.type = u'archive-print-year'
     start_container = zeit.cms.interfaces.ICMSContent(id)
     stack = [start_container]
     while stack:
@@ -26,7 +26,7 @@ def rebuildVolume(id):
                 year_coll = content
                 continue
             index_volume = zeit.content.cp.centerpage.CenterPage()
-            index_volume.type = 'archive-print-volume'
+            index_volume.type = u'archive-print-volume'
             index_volume.year = content.__parent__.__name__
             index_volume.volume = content.__name__
             for resource in content.values():
@@ -169,7 +169,7 @@ class ArchiveVolume(ArchiveBase):
     zope.component.adapts(zeit.content.article.interfaces.IArticle)
     zope.interface.implements(zeit.archive.interfaces.IArchiveVolume)
 
-    type = 'archive-print-volume'
+    type = u'archive-print-volume'
 
     def __init__(self, teaser):
         self.teaser = teaser
@@ -186,7 +186,7 @@ class ArchiveYear(ArchiveBase):
     zope.component.adapts(zeit.content.article.interfaces.IArticle)
     zope.interface.implements(zeit.archive.interfaces.IArchiveYear)
 
-    type = 'archive-print-year'
+    type = u'archive-print-year'
     volume = None
 
     def __init__(self, teaser):

@@ -7,6 +7,8 @@ zeit.archive changes
 - Für die Jahresübersichtsseite werden Container nun auch über
   die Methode rebuildVolume korrekt angelegt (siehe 0.4).
 
+- Encoding der Typ-Bezeichnung korrigiert.
+
 
 0.5.1 (2009-10-12)
 ==================
