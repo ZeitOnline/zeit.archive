@@ -84,6 +84,8 @@ class ArchiveIndex(object):
     zope.component.adapts(zeit.content.article.interfaces.IArticle)
     zope.interface.implements(zeit.archive.interfaces.IArchiveIndex)
 
+    valid_ids = ['ZEI']
+
     def __init__(self, context):
         self.context = context
         if not zeit.cms.repository.interfaces.ICollection.providedBy(context):
@@ -92,6 +94,8 @@ class ArchiveIndex(object):
             self.year = zeit.archive.interfaces.IArchiveYear(context)
 
     def addTeaser(self):
+        if (self.context.product_id not in self.valid_ids):
+            return
         if self.volume.name is None:
             return
         self._addTeaserTo(self.volume)

@@ -33,6 +33,20 @@ Create a new archive volume containing a single teaser.
 >>> archive_index = zeit.archive.interfaces.IArchiveIndex(article)
 >>> archive_index.addTeaser()
 
+>>> zeit.cms.interfaces.ICMSContent('http://xml.zeit.de/2007/index')
+Traceback (most recent call last):
+...
+TypeError: ('Could not adapt', 'http://xml.zeit.de/2007/index', <InterfaceClass zeit.cms.interfaces.ICMSContent>)
+
+
+This did not work because we only work on print-articles.
+
+>>> with zeit.cms.checkout.helper.checked_out(article) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).product_id = u'ZEI'
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article)
+>>> archive_index.addTeaser()
+
 
 Archive volume should exist now.
 
@@ -104,6 +118,8 @@ Add a teaser to an existing volume in the same ressort.
 ...         checked_out).printRessort = u'Reisen'
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).page = 1
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).product_id = u'ZEI'
 >>> archive_index = zeit.archive.interfaces.IArchiveIndex(article2)
 >>> archive_index.addTeaser()
 
@@ -145,6 +161,9 @@ A teaser without a print ressort specified will not be added.
 
 >>> article3 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/01/Martenstein')
+>>> with zeit.cms.checkout.helper.checked_out(article3) as checked_out:
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).product_id = u'ZEI'
 >>> archive_index = zeit.archive.interfaces.IArchiveIndex(article3)
 >>> archive_index.addTeaser()
 >>> index =  zeit.cms.interfaces.ICMSContent(
@@ -235,12 +254,16 @@ the resultset since our testarticles do not have set this attribute by default.
 ...         checked_out).printRessort = u'Wirtschaft'
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).page = u'1'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).product_id = u'ZEI'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
 >>> article5 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/02/Vita')
 >>> with zeit.cms.checkout.helper.checked_out(article5) as checked_out:
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).printRessort = u'Feuilleton'
+...     zeit.cms.content.interfaces.ICommonMetadata(
+...         checked_out).product_id = u'ZEI'
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article5).published = True
 >>> zeit.archive.index.rebuildVolume('http://xml.zeit.de/2007/')
 
