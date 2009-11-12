@@ -4,7 +4,8 @@ zeit.archive changes
 0.6.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Überprüfung beim Löschen ob ein Artikel bereits durch Zurückziehen aus der
+  Archivseite entfernt wurde.
 
 
 0.6.0 (2009-11-09)

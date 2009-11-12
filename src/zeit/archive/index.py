@@ -150,6 +150,8 @@ class ArchiveIndex(object):
             if archiv.name not in lead:
                 return
             block = lead[archiv.name]
+            if self.teaser not in block:
+                return
             block.remove(zeit.cms.interfaces.ICMSContent(self.teaser))
             if len(block) == 0:
                 del lead[block.__name__]
