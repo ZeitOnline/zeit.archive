@@ -1,15 +1,16 @@
 # Copyright (c) 2010 gocept gmbh & co. kg
 # See also LICENSE.txt
 
-import zope.i18n.locales
 import datetime
 import grokcore.component
 import zeit.cms.interfaces
+import zeit.cms.workflow.interfaces
 import zeit.cms.workflow.interfaces
 import zeit.content.cp.blocks.cpextra
 import zeit.content.cp.centerpage
 import zeit.content.cp.interfaces
 import zope.component
+import zope.i18n.locales
 
 
 german = zope.i18n.locales.locales.getLocale('de', 'DE')
@@ -60,3 +61,5 @@ def create_breadcrumb_index(context, event):
 
     month_container['index'] = index
 
+    publish = zeit.cms.workflow.interfaces.IPublish(month_container['index'])
+    publish.publish()

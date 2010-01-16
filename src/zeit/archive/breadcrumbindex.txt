@@ -54,6 +54,8 @@ There is an index in detuschland/2009-11 now:
 True
 
 >>> index = repository['deutschland']['2009-11']['index']
+>>> zeit.cms.workflow.interfaces.IPublishInfo(index).published
+True
 >>> index.ressort
 u'Deutschland'
 >>> index.year
@@ -148,7 +150,6 @@ Artikel und Nachrichten im Juni 2009 aus dem Ressort Integration | ZEIT ONLINE
 Lesen Sie alle Artikel und Nachrichten vom Juni 2009 aus dem Ressort Integration auf ZEIT ONLINE
 
 If the article is not in a month folder nothing happens:
-
 
 >>> article = zeit.content.article.article.Article()
 >>> article.ressort = u'Deutschland'
