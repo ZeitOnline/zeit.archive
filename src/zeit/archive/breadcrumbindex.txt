@@ -1,0 +1,171 @@
+Breadcrumb index (#6749)
+========================
+
+>>> import zeit.cms.testing
+>>> zeit.cms.testing.set_site()
+>>> principal = zeit.cms.testing.create_interaction()
+
+Whenever a ressort folder is created an index is automatically placed in there.
+
+Create a suitable folder structure:
+
+>>> import zeit.cms.repository.interfaces
+>>> from zeit.cms.repository.folder import Folder
+>>> import zope.component
+>>> repository = zope.component.getUtility(
+...     zeit.cms.repository.interfaces.IRepository)
+>>> repository['deutschland'] = Folder()
+>>> repository['deutschland']['2009-11'] = Folder()
+>>> repository['deutschland']['integration'] = Folder()
+>>> repository['deutschland']['integration']['2009-06'] = Folder()
+
+
+Create an article in deutschland/2009-11. An index will be created if it is
+published:
+
+>>> import zeit.content.article.article
+>>> article = zeit.content.article.article.Article()
+>>> article.ressort = u'Deutschland'
+>>> article.year = 2009
+>>> repository['deutschland']['2009-11']['art'] = article
+
+Publish article:
+
+>>> import lovely.remotetask.interfaces
+>>> import zeit.cms.workflow.interfaces
+>>> import zeit.workflow.interfaces
+>>> article = repository['deutschland']['2009-11']['art']
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article)
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> p = publish.publish()
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+
+
+There is an index in detuschland/2009-11 now:
+
+>>> 'index' in repository['deutschland']['2009-11']
+True
+
+>>> index = repository['deutschland']['2009-11']['index']
+>>> index.ressort
+u'Deutschland'
+>>> index.year
+2009
+>>> print index.title
+Artikel und Nachrichten im November 2009 aus dem Ressort Deutschland | ZEIT ONLINE
+>>> print index.teaserTitle
+Artikel und Nachrichten im November 2009 aus dem Ressort Deutschland | ZEIT ONLINE
+>>> print index.teaserText
+Lesen Sie alle Artikel und Nachrichten vom November 2009 aus dem Ressort Deutschland auf ZEIT ONLINE
+
+The CP is filled with blocks:
+
+>>> import lxml.etree
+>>> print lxml.etree.tostring(index.xml['body'], pretty_print=True),
+<body...>
+  <cluster area="feature">
+    <region area="lead">
+      <container cp:type="solr-month" module="solr-month" cp:__name__="1a325b3c-a943-4299-b445-8ce941df9990">
+        <cp_extra id="solr-month"/>
+      </container>
+    </region>
+    <region area="informatives">
+      <container cp:type="dpa-news" module="dpa-news" cp:__name__="1a11b24f-6224-484a-a15b-132070b6b10c">
+        <cp_extra id="dpa-news"/>
+      </container>
+      <container cp:type="dwds-ticker" module="dwds-ticker" cp:__name__="781860ed-c5ab-40f8-b1fe-38d59a246dd1">
+        <cp_extra id="dwds-ticker"/>
+      </container>
+      <container cp:type="blindblock" module="blindblock" cp:__name__="c7eceaf8-073d-4f5d-b75a-2c2e7338b28f">
+        <cp_extra id="blindblock"/>
+      </container>
+      <container cp:type="mostread" module="mostread" cp:__name__="6a1f52db-b350-4032-aa73-e791afa9e900">
+        <cp_extra id="mostread"/>
+      </container>
+      <container cp:type="mostcommented" module="mostcommented" cp:__name__="ac4a87c1-101f-4a70-beba-74de37130180">
+        <cp_extra id="mostcommented"/>
+      </container>
+    </region>
+  </cluster>
+  <cluster area="teaser-mosaic"/>
+  ...
+
+
+If the index already exists, it will not be created again:
+
+>>> uid = index['lead'].keys()
+>>> p = publish.publish()
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> index = repository['deutschland']['2009-11']['index']
+>>> uid == index['lead'].keys()
+True
+
+
+If an article is in a month folder of a sub ressort that is handled correctly
+as well:
+
+>>> article = zeit.content.article.article.Article()
+>>> article.ressort = u'Deutschland'
+>>> article.sub_ressort = u'Integration'
+>>> article.year = 2009
+>>> repository['deutschland']['integration']['2009-06']['art'] = article
+>>> article = repository['deutschland']['integration']['2009-06']['art']
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article)
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> p = publish.publish()
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+
+The texts contain the sub ressort:
+
+>>> index = repository['deutschland']['integration']['2009-06']['index']
+>>> index.ressort
+u'Deutschland'
+>>> index.sub_ressort
+u'Integration'
+>>> index.year
+2009
+>>> print index.title
+Artikel und Nachrichten im Juni 2009 aus dem Ressort Integration | ZEIT ONLINE
+>>> print index.teaserTitle
+Artikel und Nachrichten im Juni 2009 aus dem Ressort Integration | ZEIT ONLINE
+>>> print index.teaserText
+Lesen Sie alle Artikel und Nachrichten vom Juni 2009 aus dem Ressort Integration auf ZEIT ONLINE
+
+If the article is not in a month folder nothing happens:
+
+
+>>> article = zeit.content.article.article.Article()
+>>> article.ressort = u'Deutschland'
+>>> article.sub_ressort = u'Integration'
+>>> article.year = 2009
+>>> repository['deutschland']['integration']['art'] = article
+>>> article = repository['deutschland']['integration']['art']
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(article)
+>>> publish = zeit.cms.workflow.interfaces.IPublish(article)
+>>> workflow.urgent = True
+>>> workflow.can_publish()
+True
+>>> p = publish.publish()
+>>> tasks = zope.component.getUtility(
+...     lovely.remotetask.interfaces.ITaskService, 'general')
+>>> tasks.process()
+>>> workflow.published
+True
+>>> 'index' in repository['deutschland']['integration']
+False

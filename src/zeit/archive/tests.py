@@ -23,6 +23,7 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(zeit.cms.testing.FunctionalDocFileSuite(
         'README.txt',
+        'breadcrumbindex.txt',
         layer=ArchiveLayer,
         product_config={
             'zeit.content.article': zeit.content.article.tests.product_config,
