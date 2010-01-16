@@ -256,6 +256,7 @@ the resultset since our testarticles do not have set this attribute by default.
 ...         checked_out).page = u'1'
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).product_id = u'ZEI'
+>>> import zeit.cms.workflow.interfaces
 >>> zeit.cms.workflow.interfaces.IPublishInfo(article4).published = True
 >>> article5 = zeit.cms.interfaces.ICMSContent(
 ...     'http://xml.zeit.de/2007/02/Vita')
