@@ -4,7 +4,7 @@ zeit.archive changes
 0.6.2 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Automatisches anlegen eines Breadcrumb-Indexes beim Veröffentlichen (#6749).
 
 
 0.6.1 (2009-11-25)
