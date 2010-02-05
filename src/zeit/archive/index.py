@@ -33,6 +33,8 @@ def rebuildVolume(id):
                 article = zeit.content.article.interfaces.IArticle(resource, None)
                 if article is None:
                     continue
+                if (article.product_id not in ArchiveIndex.valid_ids):
+                    continue
                 pubinfo = zeit.cms.workflow.interfaces.IPublishInfo(article)
                 published = pubinfo.published
                 status = zeit.workflow.interfaces.IOldCMSStatus(article).status
@@ -84,7 +86,7 @@ class ArchiveIndex(object):
     zope.component.adapts(zeit.content.article.interfaces.IArticle)
     zope.interface.implements(zeit.archive.interfaces.IArchiveIndex)
 
-    valid_ids = ['ZEI']
+    valid_ids = ['ZEI', 'ZMLB', 'ZEOE', 'ZESA', 'ZECH']
 
     def __init__(self, context):
         self.context = context

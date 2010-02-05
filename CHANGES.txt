@@ -6,6 +6,8 @@ zeit.archive changes
 
 - Automatisches anlegen eines Breadcrumb-Indexes beim Veröffentlichen (#6749).
 
+- Weitere product_ids hinzugefügt.
+
 
 0.6.1 (2009-11-25)
 ==================
