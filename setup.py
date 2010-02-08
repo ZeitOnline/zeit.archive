@@ -19,7 +19,7 @@ setup(
         'setuptools',
         'zeit.cms>=1.26',
         'zeit.content.article',
-        'zeit.content.cp>0.31',
+        'zeit.content.cp>=0.32.0',
         ],
     entry_points = """
         [console_scripts]
