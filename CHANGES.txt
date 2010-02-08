@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.6.2 (unreleased)
+0.7.0 (2010-02-08)
 ==================
 
 - Automatisches anlegen eines Breadcrumb-Indexes beim Veröffentlichen (#6749).
