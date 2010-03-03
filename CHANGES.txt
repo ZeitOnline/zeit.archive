@@ -4,7 +4,9 @@ zeit.archive changes
 0.7.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Beim automatischen Anlegen eines Breadcrumb-Indexes für ein Unterresort wird
+  automatisch auch ein Index für das Ressort erzeugt. Dabei wird ggf. auch der
+  entsprechende Montagsordner erzeugt. (#6926)
 
 
 0.7.0 (2010-02-08)

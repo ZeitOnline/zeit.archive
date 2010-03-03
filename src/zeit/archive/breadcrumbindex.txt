@@ -148,6 +148,29 @@ Artikel und Nachrichten im Juni 2009 aus dem Ressort Integration | ZEIT ONLINE
 Artikel und Nachrichten im Juni 2009 aus dem Ressort Integration | ZEIT ONLINE
 >>> print index.teaserText
 Lesen Sie alle Artikel und Nachrichten vom Juni 2009 aus dem Ressort Integration auf ZEIT ONLINE
+>>> zeit.workflow.interfaces.IContentWorkflow(index).published
+True
+
+
+The container and index for the ressort was implicitly also created and
+published:
+
+>>> index = repository['deutschland']['2009-06']['index']
+>>> index.ressort
+u'Deutschland'
+>>> index.sub_ressort is None
+True
+>>> index.year
+2009
+>>> print index.title
+Artikel und Nachrichten im Juni 2009 aus dem Ressort Deutschland | ZEIT ONLINE
+>>> print index.teaserTitle
+Artikel und Nachrichten im Juni 2009 aus dem Ressort Deutschland | ZEIT ONLINE
+>>> print index.teaserText
+Lesen Sie alle Artikel und Nachrichten vom Juni 2009 aus dem Ressort Deutschland auf ZEIT ONLINE
+>>> zeit.workflow.interfaces.IContentWorkflow(index).published
+True
+
 
 If the article is not in a month folder nothing happens:
 
