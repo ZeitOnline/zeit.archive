@@ -19,10 +19,11 @@ MONTH_NAMES = german.dates.calendars[u'gregorian'].getMonthNames()
 del german
 
 
-def create_block(where, what):
+def create_cpextra(where, what):
     factory = zope.component.getAdapter(
-        where, zeit.content.cp.interfaces.IElementFactory, name=what)
-    return factory()
+        where, zeit.content.cp.interfaces.IElementFactory, name='cpextra')
+    block = factory()
+    block.cpextra = what
 
 
 @grokcore.component.subscribe(
@@ -68,10 +69,10 @@ def create_breadcrumb_index(
         return
 
     index = zeit.content.cp.centerpage.CenterPage()
-    create_block(index['lead'], 'solr-month')
-    create_block(index['informatives'], 'dpa-news')
-    create_block(index['informatives'], 'dwds-ticker')
-    create_block(index['informatives'], 'blindblock')
+    create_cpextra(index['lead'], 'solr-month')
+    create_cpextra(index['informatives'], 'dpa-news')
+    create_cpextra(index['informatives'], 'dwds-ticker')
+    create_cpextra(index['informatives'], 'blindblock')
     # Adding to container implicitly creates mostread and mostcommmented
 
     index.ressort = metadata.ressort

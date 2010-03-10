@@ -17,9 +17,9 @@ setup(
     install_requires=[
         'grokcore.component',
         'setuptools',
-        'zeit.cms>=1.26',
-        'zeit.content.article',
-        'zeit.content.cp>=0.32.0',
+        'zeit.cms>=1.41.0',
+        'zeit.content.article>=2.8.1',
+        'zeit.content.cp>=0.33.0',
         ],
     entry_points = """
         [console_scripts]
