@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.7.1 (unreleased)
+0.8.0 (2010-03-10)
 ==================
 
 - Beim automatischen Anlegen eines Breadcrumb-Indexes für ein Unterresort wird
