@@ -34,6 +34,12 @@ def create_breadcrumb_index_on_publish(context, event):
     if metadata is None:
         return
     month_container = context.__parent__
+    try:
+        month = datetime.datetime.strptime(
+            month_container.__name__, '%Y-%m').month
+    except ValueError:
+        # Not a month container
+        return
     ressort_month_container = None
     if metadata.sub_ressort:
         try:
@@ -52,22 +58,15 @@ def create_breadcrumb_index_on_publish(context, event):
                         zeit.cms.repository.folder.Folder())
                     ressort_month_container = ressort_container[
                         month_container.__name__]
-    create_breadcrumb_index(month_container, metadata)
+    create_breadcrumb_index(month_container, month, metadata)
     if ressort_month_container is not None:
         create_breadcrumb_index(
-            ressort_month_container, metadata, set_sub_ressort=False)
+            ressort_month_container, month, metadata, set_sub_ressort=False)
 
 def create_breadcrumb_index(
-    month_container, metadata, set_sub_ressort=True):
+    month_container, month, metadata, set_sub_ressort=True):
     if 'index' in month_container:
         return
-    try:
-        month = datetime.datetime.strptime(
-            month_container.__name__, '%Y-%m').month
-    except ValueError:
-        # Not a month container
-        return
-
     index = zeit.content.cp.centerpage.CenterPage()
     create_cpextra(index['lead'], 'solr-month')
     create_cpextra(index['informatives'], 'dpa-news')

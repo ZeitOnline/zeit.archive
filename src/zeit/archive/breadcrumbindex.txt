@@ -193,3 +193,9 @@ True
 True
 >>> 'index' in repository['deutschland']['integration']
 False
+
+Make sure no superfluous containers are created when an object outside a month
+container is published:
+
+>>> 'integration' in repository
+False
