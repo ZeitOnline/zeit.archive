@@ -4,6 +4,8 @@ zeit.archive changes
 0.8.1 (unreleased)
 ==================
 
+- Using versions from the ZTK.
+
 - Avoid creating superfuous directories (#6968).
 
 
