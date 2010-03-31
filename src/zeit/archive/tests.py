@@ -8,8 +8,7 @@ import zope.app.testing.functional
 
 
 ArchiveZCMLLayer = zeit.cms.testing.ZCMLLayer(
-    pkg_resources.resource_filename(__name__, 'ftesting.zcml'),
-    __name__, 'ArchiveZCMLLayer', allow_teardown=True,
+    'ftesting.zcml',
     product_config=zeit.content.cp.testing.product_config)
 
 

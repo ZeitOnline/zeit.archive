@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.8.1 (unreleased)
+0.8.1 (2010-03-31)
 ==================
 
 - Using versions from the ZTK.
