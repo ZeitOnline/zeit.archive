@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='zeit.archive',
-    version = '0.8.1',
+    version = '0.8.2dev',
     author='Dominik Hoppe',
     author_email='dominik.hoppe@zeit.de',
     url='http://trac.gocept.com/zeit',
