@@ -443,7 +443,7 @@ Check attribute values.
 
 >>> print lxml.etree.tostring(index.xml, pretty_print=True)
 <centerpage ... type="archive-print-volume">
-  <head>
+  <head>...
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date_first_released">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="date_last_published">...</attribute>
@@ -455,7 +455,7 @@ Check attribute values.
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:a344095a-236c-4d2e-8ad0-5b86363cb6ae}</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="volume">01</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="year">2007</attribute>
-  </head>
+  ...</head>
 ...
 </centerpage>
 <BLANKLINE>
@@ -464,7 +464,7 @@ Check attribute values.
 ...     'http://xml.zeit.de/2007/index')
 >>> print lxml.etree.tostring(index.xml, pretty_print=True)
 <centerpage ... type="archive-print-year">
-  <head>
+  <head>...
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date-last-modified">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="date_first_released">...</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/workflow" name="date_last_published">...</attribute>
@@ -475,7 +475,7 @@ Check attribute values.
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/zeit.content.cp" name="type">archive-print-year</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="uuid">{urn:uuid:c37e3932-5c05-41e6-a143-b14ca2f674f5}</attribute>
     <attribute py:pytype="str" ns="http://namespaces.zeit.de/CMS/document" name="year">2007</attribute>
-  </head>
+...</head>
 ...
 </centerpage>
 <BLANKLINE>

@@ -4,7 +4,7 @@ zeit.archive changes
 0.8.2 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Relaxed tests against changes in CP xml format (#7466)
 
 
 0.8.1 (2010-03-31)
