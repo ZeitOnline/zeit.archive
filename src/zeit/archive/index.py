@@ -8,7 +8,6 @@ import zope.component
 import zope.interface
 
 
-
 def rebuildVolume(id):
     valid_status = ['OK', 'imported', 'importedVHB']
     index_year = zeit.content.cp.centerpage.CenterPage()
@@ -30,7 +29,8 @@ def rebuildVolume(id):
             index_volume.year = content.__parent__.__name__
             index_volume.volume = content.__name__
             for resource in content.values():
-                article = zeit.content.article.interfaces.IArticle(resource, None)
+                article = zeit.content.article.interfaces.IArticle(
+                    resource, None)
                 if article is None:
                     continue
                 if (article.product_id not in ArchiveIndex.valid_ids):
@@ -41,7 +41,8 @@ def rebuildVolume(id):
                 if (published == False) and (status not in valid_status):
                     continue
                 archive_index = zeit.archive.interfaces.IArchiveIndex(article)
-                archive_volume = zeit.archive.interfaces.IArchiveVolume(article)
+                archive_volume = zeit.archive.interfaces.IArchiveVolume(
+                    article)
                 archive_year = zeit.archive.interfaces.IArchiveYear(article)
                 if archive_volume.name is None:
                     continue
@@ -77,8 +78,6 @@ def removeContextWhenRemoved(context, event):
 def removeContextWhenRetract(context, event):
     index = zeit.archive.interfaces.IArchiveIndex(context)
     index.removeTeaser()
-
-
 
 
 class ArchiveIndex(object):
@@ -134,7 +133,8 @@ class ArchiveIndex(object):
             block = lead[archiv.name]
         else:
             factory = zope.component.getAdapter(
-                lead, zeit.content.cp.interfaces.IElementFactory, name='teaser')
+                lead, zeit.content.cp.interfaces.IElementFactory,
+                name='teaser')
             block = factory()
             layout = zeit.content.cp.layout.get_layout(archiv.type)
             block.layout = layout
@@ -171,6 +171,7 @@ class ArchiveBase(object):
 
     def create(self, index):
         self.index_coll[self.archive_name] = index
+
 
 class ArchiveVolume(ArchiveBase):
 
