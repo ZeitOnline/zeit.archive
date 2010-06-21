@@ -5,6 +5,8 @@ zeit.archive changes
 ==================
 
 - Relaxed tests against changes in CP xml format (#7466)
+- Raise readable error message when an archive page can't be checked out
+  (#7442).
 
 
 0.8.1 (2010-03-31)

@@ -125,6 +125,10 @@ class ArchiveIndex(object):
         else:
             with zeit.cms.checkout.helper.checked_out(
                 index, events=False) as co:
+                if co is None:
+                    raise TypeError(
+                        'Could not check out archive page %s (is it locked?)'
+                        % index.uniqueId)
                 self._createTeaser(archiv, co)
 
     def _createTeaser(self, archiv, index, dummy=False):

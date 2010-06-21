@@ -120,6 +120,20 @@ Add a teaser to an existing volume in the same ressort.
 ...         checked_out).page = 1
 ...     zeit.cms.content.interfaces.ICommonMetadata(
 ...         checked_out).product_id = u'ZEI'
+
+If the archive page can't be checked out, a readable error is raised:
+
+>>> index =  zeit.cms.interfaces.ICMSContent(
+...     'http://xml.zeit.de/2007/01/index')
+>>> co = zeit.cms.checkout.interfaces.ICheckoutManager(index).checkout()
+
+>>> archive_index = zeit.archive.interfaces.IArchiveIndex(article2)
+>>> archive_index.addTeaser()
+Traceback (most recent call last):
+TypeError: Could not check out archive page http://xml.zeit.de/2007/01/index
+(is it locked?)
+
+>>> ignored = zeit.cms.checkout.interfaces.ICheckoutManager(co).checkin()
 >>> archive_index = zeit.archive.interfaces.IArchiveIndex(article2)
 >>> archive_index.addTeaser()
 
