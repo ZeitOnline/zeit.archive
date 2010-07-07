@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.8.2 (unreleased)
+0.8.2 (2010-07-07)
 ==================
 
 - Relaxed tests against changes in CP xml format (#7466)
