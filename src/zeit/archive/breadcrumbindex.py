@@ -42,22 +42,20 @@ def create_breadcrumb_index_on_publish(context, event):
         return
     ressort_month_container = None
     if metadata.sub_ressort:
-        try:
-            ressort_container = month_container.__parent__.__parent__
-        except AttribueError:
-            pass
-        else:
-            if zeit.cms.interfaces.ICMSContent.providedBy(ressort_container):
-                # Be extra sure we're still in the repository
-                try:
-                    ressort_month_container = ressort_container[
-                        month_container.__name__]
-                except KeyError:
-                    # Doesn't exist. Create it
-                    ressort_container[month_container.__name__] = (
-                        zeit.cms.repository.folder.Folder())
-                    ressort_month_container = ressort_container[
-                        month_container.__name__]
+        # The following parent/parent even works, when the month container is a
+        # child of the repository. ressort_contain will be the ZODB root then.
+        ressort_container = month_container.__parent__.__parent__
+        if zeit.cms.interfaces.ICMSContent.providedBy(ressort_container):
+            # Be extra sure we're still in the repository
+            try:
+                ressort_month_container = ressort_container[
+                    month_container.__name__]
+            except KeyError:
+                # Doesn't exist. Create it
+                ressort_container[month_container.__name__] = (
+                    zeit.cms.repository.folder.Folder())
+                ressort_month_container = ressort_container[
+                    month_container.__name__]
     create_breadcrumb_index(month_container, month, metadata)
     if ressort_month_container is not None:
         create_breadcrumb_index(

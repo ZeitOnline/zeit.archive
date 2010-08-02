@@ -4,7 +4,7 @@ zeit.archive changes
 0.8.3 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Removed a pointles and wrong except (#7663).
 
 
 0.8.2 (2010-07-07)
