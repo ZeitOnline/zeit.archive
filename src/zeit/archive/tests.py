@@ -11,6 +11,7 @@ ArchiveZCMLLayer = zeit.cms.testing.ZCMLLayer(
     'ftesting.zcml',
     product_config=(
         zeit.cms.testing.cms_product_config +
+        zeit.content.article.tests.product_config +
         zeit.content.cp.testing.product_config))
 
 
@@ -41,7 +42,6 @@ def test_suite():
         'breadcrumbindex.txt',
         layer=ArchiveLayer,
         product_config={
-            'zeit.content.article': zeit.content.article.tests.product_config,
             'zeit.workflow': {'publish-script': 'cat',
                               'retract-script': 'cat',
                               'path-prefix': ''},
