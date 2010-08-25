@@ -38,7 +38,6 @@ class ArchiveLayer(ArchiveZCMLLayer):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(zeit.cms.testing.FunctionalDocFileSuite(
-        'README.txt',
         'breadcrumbindex.txt',
         layer=ArchiveLayer,
         product_config={
