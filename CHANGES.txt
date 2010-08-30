@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.8.4 (unreleased)
+0.9.0 (2010-08-30)
 ==================
 
 - Removed everything from zeit.archive not required by breadcrumbs.
