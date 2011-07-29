@@ -31,7 +31,9 @@ def create_cpextra(where, what):
     zeit.cms.workflow.interfaces.IBeforePublishEvent)
 def create_breadcrumb_index_on_publish(context, event):
     metadata = zeit.cms.content.interfaces.ICommonMetadata(context, None)
-    if metadata is None:
+    if metadata is None or context.__name__ == 'index':
+        # Ignore index as a rough measure to ignore the publishing of the
+        # breadcrumb index itself.
         return
     month_container = context.__parent__
     try:
@@ -61,10 +63,20 @@ def create_breadcrumb_index_on_publish(context, event):
         create_breadcrumb_index(
             ressort_month_container, month, metadata, set_sub_ressort=False)
 
+
 def create_breadcrumb_index(
     month_container, month, metadata, set_sub_ressort=True):
-    if 'index' in month_container:
-        return
+    index = month_container.get('index')
+    if index is not None:
+        index = month_container['index']
+        # There is an index; but it might not be published! (#9252)
+        info = zeit.cms.workflow.interfaces.IPublishInfo(index, None)
+        if info and info.published:
+            # All right, we're done.
+            return
+        # Either it's the wrong type or it is not published. Delete and
+        # re-create the index
+        del month_container['index']
     index = zeit.content.cp.centerpage.CenterPage()
     create_cpextra(index['lead'], 'solr-month')
     create_cpextra(index['informatives'], 'dpa-news')

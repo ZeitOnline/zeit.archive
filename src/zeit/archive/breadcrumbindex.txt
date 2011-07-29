@@ -111,6 +111,17 @@ If the index already exists, it will not be created again:
 >>> uid == index['lead'].keys()
 True
 
+If the index is not published, it will be publihsed again:
+
+>>> workflow = zeit.workflow.interfaces.IContentWorkflow(index)
+>>> workflow.published
+True
+>>> workflow.published = False  # Depublish
+>>> p = publish.publish()
+>>> tasks.process()
+>>> workflow.published
+True
+
 
 If an article is in a month folder of a sub ressort that is handled correctly
 as well:
