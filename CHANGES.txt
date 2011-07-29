@@ -4,7 +4,7 @@ zeit.archive changes
 0.9.1 (unreleased)
 ==================
 
-- Fix imports and tests after a few things have been moved to zeit.edit.
+- Nothing changed yet.
 
 
 0.9.0 (2010-08-30)

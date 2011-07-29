@@ -16,9 +16,6 @@
 
   <include package="zeit.cms" file="ftesting-securitypolicy.zcml" />
 
-  <include package="zeit.edit" />
-  <include package="zeit.wysiwyg" />
-
   <include package="zeit.content.cp" />
   <include package="zeit.content.cp.browser" />
 
@@ -31,3 +28,4 @@
 
   <include package="zeit.archive" />
 </configure>
+
