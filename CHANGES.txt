@@ -1,7 +1,7 @@
 zeit.archive changes
 ====================
 
-0.9.1 (unreleased)
+0.9.1 (2011-07-29)
 ==================
 
 - Makre sure the breadcrumb index is published even when it was created before
