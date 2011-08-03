@@ -1,4 +1,6 @@
-from zope.testing import doctest
+# Copyright (c) 2011 gocept gmbh & co. kg
+# See also LICENSE.txt
+
 import pkg_resources
 import unittest
 import zeit.cms.testing
@@ -23,16 +25,16 @@ class ArchiveLayer(ArchiveZCMLLayer):
         # any rules.
         cls.config = zope.app.appsetup.product.getProductConfiguration(
             'zeit.content.cp')
-        cls.rules_url = cls.config['rules-url']
+        cls.rules_url = cls.config.get('rules-url')
         cls.config['rules-url'] = 'file://%s' % (
             pkg_resources.resource_filename(
                 'zeit.content.cp.tests.fixtures', 'syntax_error'))
 
     @classmethod
     def tearDown(cls):
-        cls.config['rules-url'] = cls.rules_url
+        if cls.rules_url is not None:
+            cls.config['rules-url'] = cls.rules_url
         del cls.config
-
 
 
 def test_suite():
