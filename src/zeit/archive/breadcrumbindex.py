@@ -1,15 +1,15 @@
 # Copyright (c) 2010 gocept gmbh & co. kg
 # See also LICENSE.txt
 
-import zeit.cms.repository.folder
 import datetime
 import grokcore.component
 import zeit.cms.interfaces
+import zeit.cms.repository.folder
 import zeit.cms.workflow.interfaces
 import zeit.cms.workflow.interfaces
 import zeit.content.cp.blocks.cpextra
 import zeit.content.cp.centerpage
-import zeit.content.cp.interfaces
+import zeit.edit.interfaces
 import zope.component
 import zope.i18n.locales
 
@@ -21,7 +21,7 @@ del german
 
 def create_cpextra(where, what):
     factory = zope.component.getAdapter(
-        where, zeit.content.cp.interfaces.IElementFactory, name='cpextra')
+        where, zeit.edit.interfaces.IElementFactory, name='cpextra')
     block = factory()
     block.cpextra = what
 

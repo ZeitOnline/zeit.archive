@@ -24,7 +24,7 @@ class ArchiveLayer(ArchiveZCMLLayer):
         # Use a rules file which contains only a syntax error so we don't have
         # any rules.
         cls.config = zope.app.appsetup.product.getProductConfiguration(
-            'zeit.content.cp')
+            'zeit.edit')
         cls.rules_url = cls.config.get('rules-url')
         cls.config['rules-url'] = 'file://%s' % (
             pkg_resources.resource_filename(

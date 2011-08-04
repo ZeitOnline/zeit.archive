@@ -20,6 +20,7 @@ setup(
         'zeit.cms>=1.41.1',
         'zeit.content.article>=2.8.1',
         'zeit.content.cp>=0.33.1',
+        'zeit.edit',
         ],
     entry_points = """
         [console_scripts]
