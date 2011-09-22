@@ -58,10 +58,22 @@ def create_breadcrumb_index_on_publish(context, event):
                     zeit.cms.repository.folder.Folder())
                 ressort_month_container = ressort_container[
                     month_container.__name__]
-    create_breadcrumb_index(month_container, month, metadata)
-    if ressort_month_container is not None:
+        sub_ressort_container = month_container.__parent__
+        sub_ressort_month_container = month_container
+    else:
+        ressort_container = month_container.__parent__
+        ressort_month_container = month_container
+        sub_ressort_container = None
+        sub_ressort_month_container = None
+    if (metadata.ressort and
+        metadata.ressort.lower() == ressort_container.__name__):
         create_breadcrumb_index(
             ressort_month_container, month, metadata, set_sub_ressort=False)
+    if (sub_ressort_month_container is not None and
+        metadata.sub_ressort and
+        metadata.sub_ressort.lower() == sub_ressort_container.__name__):
+        create_breadcrumb_index(
+            sub_ressort_month_container, month, metadata, set_sub_ressort=True)
 
 
 def create_breadcrumb_index(
