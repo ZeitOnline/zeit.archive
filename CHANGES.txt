@@ -1,7 +1,14 @@
 zeit.archive changes
 ====================
 
-0.9.2 (unreleased)
+0.9.3 (unreleased)
+==================
+
+- Don't publish a breadcrumb index if the ressort or sub ressort does not match
+  the folder name (for #8996).
+
+
+0.9.2 (2011-11-13)
 ==================
 
 - Don't publish a breadcrumb index if the ressort or sub ressort does not match
