@@ -1,4 +1,4 @@
-# Copyright (c) 2011 gocept gmbh & co. kg
+# Copyright (c) 2011-2012 gocept gmbh & co. kg
 # See also LICENSE.txt
 
 import mock
@@ -7,6 +7,7 @@ import unittest
 import zeit.cms.testing
 import zeit.content.article.tests
 import zeit.content.cp.testing
+import zeit.workflow.testing
 import zope.app.testing.functional
 
 
@@ -15,6 +16,7 @@ ArchiveZCMLLayer = zeit.cms.testing.ZCMLLayer(
     product_config=(
         zeit.cms.testing.cms_product_config +
         zeit.content.article.tests.product_config +
+        zeit.workflow.testing.product_config +
         zeit.content.cp.testing.product_config))
 
 
@@ -86,11 +88,6 @@ def test_suite():
     suite.addTest(zeit.cms.testing.FunctionalDocFileSuite(
         'breadcrumbindex.txt',
         layer=ArchiveLayer,
-        product_config={
-            'zeit.workflow': {'publish-script': 'cat',
-                              'retract-script': 'cat',
-                              'path-prefix': ''},
-        }
     ))
 
     return suite
