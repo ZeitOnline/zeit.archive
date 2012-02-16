@@ -8,7 +8,7 @@ import zeit.cms.testing
 import zeit.content.article.tests
 import zeit.content.cp.testing
 import zeit.workflow.testing
-import zope.app.testing.functional
+import zope.app.appsetup.product
 
 
 ArchiveZCMLLayer = zeit.cms.testing.ZCMLLayer(
