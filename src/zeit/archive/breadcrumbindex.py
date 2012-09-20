@@ -92,7 +92,8 @@ def create_breadcrumb_index(
     index = zeit.content.cp.centerpage.CenterPage()
     create_cpextra(index['lead'], 'solr-month')
     create_cpextra(index['informatives'], 'dpa-news')
-    create_cpextra(index['informatives'], 'dwds-ticker')
+    create_cpextra(index['informatives'], 'afp_extra')
+    create_cpextra(index['informatives'], 'sid_extra')
     create_cpextra(index['informatives'], 'blindblock')
     # Adding to container implicitly creates mostread and mostcommmented
 

@@ -82,8 +82,11 @@ The CP is filled with blocks:
       <container cp:type="cpextra" module="dpa-news" cp:__name__="id-1a11b24f-6224-484a-a15b-132070b6b10c">
         <cp_extra id="dpa-news"/>
       </container>
-      <container cp:type="cpextra" module="dwds-ticker" cp:__name__="id-781860ed-c5ab-40f8-b1fe-38d59a246dd1">
-        <cp_extra id="dwds-ticker"/>
+      <container cp:type="cpextra" module="afp_extra" cp:__name__="id-781860ed-c5ab-40f8-b1fe-38d59a246dd1">
+        <cp_extra id="afp_extra"/>
+      </container>
+      <container cp:type="cpextra" module="sid_extra" cp:__name__="id-781860ed-c5ab-40f8-b1fe-38d59a246dd1">
+        <cp_extra id="sid_extra"/>
       </container>
       <container cp:type="cpextra" module="blindblock" cp:__name__="id-c7eceaf8-073d-4f5d-b75a-2c2e7338b28f">
         <cp_extra id="blindblock"/>
