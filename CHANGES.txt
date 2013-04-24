@@ -1,8 +1,8 @@
 zeit.archive changes
 ====================
 
-0.10.1 (unreleased)
-===================
+2.0 (2013-04-24)
+================
 
 - Repair import which changed in zeit.content.article.
 
