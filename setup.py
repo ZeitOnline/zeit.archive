@@ -18,7 +18,7 @@ setup(
         'grokcore.component',
         'setuptools',
         'zeit.cms>1.52.0',
-        'zeit.content.article>=2.8.1',
+        'zeit.content.article>=3.0',
         'zeit.content.cp>=0.33.1',
         'zeit.edit',
         ],
