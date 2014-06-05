@@ -4,7 +4,7 @@ zeit.archive changes
 2.1 (unreleased)
 ================
 
-- Nothing changed yet.
+- Switch layers to plone.testing.
 
 
 2.0 (2013-04-24)
