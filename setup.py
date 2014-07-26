@@ -9,11 +9,11 @@ setup(
     description="""\
 """,
     packages=find_packages('src'),
-    package_dir = {'': 'src'},
-    include_package_data = True,
+    package_dir={'': 'src'},
+    include_package_data=True,
     zip_safe=False,
     license='gocept proprietary',
-    namespace_packages = ['zeit'],
+    namespace_packages=['zeit'],
     install_requires=[
         'grokcore.component',
         'plone.testing',
@@ -22,9 +22,9 @@ setup(
         'zeit.content.article>=3.0',
         'zeit.content.cp>=0.33.1',
         'zeit.edit',
-        ],
-    entry_points = """
+    ],
+    entry_points="""
         [console_scripts]
-        archive-index-builder = zeit.archive.worker:build_main
+        archive-index-builder=zeit.archive.worker:build_main
         """
 )

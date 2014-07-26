@@ -104,15 +104,15 @@ def create_breadcrumb_index(
     else:
         ressort_name = metadata.ressort
     index.year = metadata.year
-    month_name = MONTH_NAMES[month-1]
+    month_name = MONTH_NAMES[month - 1]
 
     index.title = index.teaserTitle = (
         u'Artikel und Nachrichten im %s %s aus dem Ressort %s | ZEIT ONLINE' %(
-        month_name, index.year, ressort_name))
+            month_name, index.year, ressort_name))
     index.teaserText = (
         u'Lesen Sie alle Artikel und Nachrichten vom %s %s'
         u' aus dem Ressort %s auf ZEIT ONLINE' % (
-        month_name, index.year, ressort_name))
+            month_name, index.year, ressort_name))
 
     month_container['index'] = index
 
