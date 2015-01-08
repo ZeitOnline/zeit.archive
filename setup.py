@@ -5,14 +5,13 @@ setup(
     version='2.0.2.dev0',
     author='Dominik Hoppe',
     author_email='dominik.hoppe@zeit.de',
-    url='http://trac.gocept.com/zeit',
-    description="""\
-""",
+    url='http://www.zeit.de/',
+    description="Monthly archive centerpages",
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
-    license='gocept proprietary',
+    license='BSD',
     namespace_packages=['zeit'],
     install_requires=[
         'grokcore.component',
