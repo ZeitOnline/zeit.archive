@@ -72,34 +72,34 @@ The CP is filled with blocks:
 >>> import lxml.etree
 >>> print lxml.etree.tostring(index.xml['body'], pretty_print=True),
 <body...>
-  <cluster area="feature">
-    <region area="lead">
-      <container cp:type="cpextra" module="solr-month" cp:__name__="id-1a325b3c-a943-4299-b445-8ce941df9990">
+  <cluster area="feature"...>
+    <region area="lead"...>
+      <container cp:type="cpextra" module="solr-month"...>
         <cp_extra id="solr-month"/>
       </container>
     </region>
-    <region area="informatives">
-      <container cp:type="cpextra" module="dpa-news" cp:__name__="id-1a11b24f-6224-484a-a15b-132070b6b10c">
+    <region area="informatives"...>
+      <container cp:type="cpextra" module="dpa-news"...>
         <cp_extra id="dpa-news"/>
       </container>
-      <container cp:type="cpextra" module="afp_extra" cp:__name__="id-781860ed-c5ab-40f8-b1fe-38d59a246dd1">
+      <container cp:type="cpextra" module="afp_extra"...>
         <cp_extra id="afp_extra"/>
       </container>
-      <container cp:type="cpextra" module="sid_extra" cp:__name__="id-781860ed-c5ab-40f8-b1fe-38d59a246dd1">
+      <container cp:type="cpextra" module="sid_extra"...>
         <cp_extra id="sid_extra"/>
       </container>
-      <container cp:type="cpextra" module="blindblock" cp:__name__="id-c7eceaf8-073d-4f5d-b75a-2c2e7338b28f">
+      <container cp:type="cpextra" module="blindblock"...>
         <cp_extra id="blindblock"/>
       </container>
-      <container cp:type="cpextra" module="mostread" cp:__name__="id-6a1f52db-b350-4032-aa73-e791afa9e900">
+      <container cp:type="cpextra" module="mostread"...>
         <cp_extra id="mostread"/>
       </container>
-      <container cp:type="cpextra" module="mostcommented" cp:__name__="id-ac4a87c1-101f-4a70-beba-74de37130180">
+      <container cp:type="cpextra" module="mostcommented"...>
         <cp_extra id="mostcommented"/>
       </container>
     </region>
   </cluster>
-  <cluster area="teaser-mosaic"/>
+  <cluster area="teaser-mosaic".../>
   ...
 
 
