@@ -17,7 +17,7 @@ setup(
         'grokcore.component',
         'plone.testing',
         'setuptools',
-        'zeit.cms>1.52.0',
+        'zeit.cms>=2.46.0.dev0',
         'zeit.content.article>=3.0',
         'zeit.content.cp>=0.33.1',
         'zeit.edit',

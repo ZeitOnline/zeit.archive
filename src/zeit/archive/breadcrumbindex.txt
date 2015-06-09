@@ -39,7 +39,7 @@ Publish article:
 >>> publish = zeit.cms.workflow.interfaces.IPublish(article)
 >>> workflow.urgent = True
 >>> workflow.can_publish()
-True
+'can-publish-success'
 >>> p = publish.publish()
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
@@ -139,7 +139,7 @@ as well:
 >>> publish = zeit.cms.workflow.interfaces.IPublish(article)
 >>> workflow.urgent = True
 >>> workflow.can_publish()
-True
+'can-publish-success'
 >>> p = publish.publish()
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
@@ -198,7 +198,7 @@ If the article is not in a month folder nothing happens:
 >>> publish = zeit.cms.workflow.interfaces.IPublish(article)
 >>> workflow.urgent = True
 >>> workflow.can_publish()
-True
+'can-publish-success'
 >>> p = publish.publish()
 >>> tasks = zope.component.getUtility(
 ...     lovely.remotetask.interfaces.ITaskService, 'general')
