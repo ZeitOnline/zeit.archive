@@ -42,7 +42,7 @@ Publish article:
 'can-publish-success'
 >>> p = publish.publish()
 >>> tasks = zope.component.getUtility(
-...     lovely.remotetask.interfaces.ITaskService, 'general')
+...     lovely.remotetask.interfaces.ITaskService, 'highprio')
 >>> tasks.process()
 >>> workflow.published
 True
@@ -107,8 +107,6 @@ If the index already exists, it will not be created again:
 
 >>> uid = index['lead'].keys()
 >>> p = publish.publish()
->>> tasks = zope.component.getUtility(
-...     lovely.remotetask.interfaces.ITaskService, 'general')
 >>> tasks.process()
 >>> index = repository['deutschland']['2009-11']['index']
 >>> uid == index['lead'].keys()
@@ -141,8 +139,6 @@ as well:
 >>> workflow.can_publish()
 'can-publish-success'
 >>> p = publish.publish()
->>> tasks = zope.component.getUtility(
-...     lovely.remotetask.interfaces.ITaskService, 'general')
 >>> tasks.process()
 >>> workflow.published
 True
@@ -200,8 +196,6 @@ If the article is not in a month folder nothing happens:
 >>> workflow.can_publish()
 'can-publish-success'
 >>> p = publish.publish()
->>> tasks = zope.component.getUtility(
-...     lovely.remotetask.interfaces.ITaskService, 'general')
 >>> tasks.process()
 >>> workflow.published
 True
