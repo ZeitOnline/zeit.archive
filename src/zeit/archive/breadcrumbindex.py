@@ -4,7 +4,6 @@ import zeit.cms.interfaces
 import zeit.cms.repository.folder
 import zeit.cms.workflow.interfaces
 import zeit.cms.workflow.interfaces
-import zeit.content.cp.blocks.cpextra
 import zeit.content.cp.centerpage
 import zeit.edit.interfaces
 import zope.component
@@ -63,18 +62,18 @@ def create_breadcrumb_index_on_publish(context, event):
         sub_ressort_container = None
         sub_ressort_month_container = None
     if (metadata.ressort and
-        metadata.ressort.lower() == ressort_container.__name__):
+            metadata.ressort.lower() == ressort_container.__name__):
         create_breadcrumb_index(
             ressort_month_container, month, metadata, set_sub_ressort=False)
     if (sub_ressort_month_container is not None and
-        metadata.sub_ressort and
-        metadata.sub_ressort.lower() == sub_ressort_container.__name__):
+            metadata.sub_ressort and
+            metadata.sub_ressort.lower() == sub_ressort_container.__name__):
         create_breadcrumb_index(
             sub_ressort_month_container, month, metadata, set_sub_ressort=True)
 
 
 def create_breadcrumb_index(
-    month_container, month, metadata, set_sub_ressort=True):
+        month_container, month, metadata, set_sub_ressort=True):
     index = month_container.get('index')
     if index is not None:
         index = month_container['index']
@@ -104,8 +103,8 @@ def create_breadcrumb_index(
     month_name = MONTH_NAMES[month - 1]
 
     index.title = index.teaserTitle = (
-        u'Artikel und Nachrichten im %s %s aus dem Ressort %s | ZEIT ONLINE' %(
-            month_name, index.year, ressort_name))
+        u'Artikel und Nachrichten im %s %s aus dem Ressort %s | ZEIT ONLINE' %
+        (month_name, index.year, ressort_name))
     index.teaserText = (
         u'Lesen Sie alle Artikel und Nachrichten vom %s %s'
         u' aus dem Ressort %s auf ZEIT ONLINE' % (
